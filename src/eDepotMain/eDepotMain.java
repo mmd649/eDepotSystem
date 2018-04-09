@@ -37,9 +37,9 @@ public class eDepotMain {
 				case "1":
 				case "V":{
 					
-					System.out.print("\nPlease enter your username: /n");
+					System.out.print("\nPlease enter your username: ");
 					userName = S.next();
-					System.out.print("Please enter your password: /n");
+					System.out.print("Please enter your password: ");
 					passWord = S.next();
 					
 					depotOBJ.logOn(userName, passWord);

@@ -9,13 +9,15 @@ public class Depot {
 	private ArrayList<String> passWord = new ArrayList<>();
 	private ArrayList<String> jobType = new ArrayList<>();
 	
+	public Depot(){
+		
+		loadUsers();
+	}
+	
 	public void logOn(String user, String pass) {
 		// gets input from uses
-		if(userName.contains(user) && passWord.contains(pass)){
-			
-			if (user.equals(userName) && pass.equals(passWord)) {
-		        System.out.print("your login message");
-		    }
+		if(userName.contains(user) == true && passWord.contains(pass) == true){
+			System.out.print("Welcome ");
 		}else{
 			System.out.print("Sorry username does not match or records!");
 		}
