@@ -15,13 +15,15 @@ public class eDepotMain {
 		
 		do {
 			
-			System.out.println("\n----------------------------");
+			System.out.println("\n __________________________");
 			System.out.println("|     eDepot Main Menu     |");
-			System.out.println("----------------------------");
-			System.out.println("1 - [V]iew Work Schedule");
-			System.out.println("2 - [A]ssign Work Schedule");
-			System.out.println("3 - [R]e-Assign Vehicle");
-			System.out.println("Q - Quit");
+			System.out.println("|--------------------------|");
+			System.out.println("|1 - [V]iew Work Schedule  |");
+			System.out.println("|2 - [S]et up Work Schedule|");
+			System.out.println("|3 - [A]dd Vehicle         |");
+			System.out.println("|4 - [R]e-Assign Vehicle   |");
+			System.out.println("|Q - Quit                  |");
+			System.out.println(" --------------------------");
 			System.out.print("\nPick: ");
 			
 			switch(choice) {
