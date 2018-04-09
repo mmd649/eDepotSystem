@@ -10,7 +10,7 @@ public class eDepotMain {
 	
 	static Depot depotOBJ = new Depot();
 	
-	public void main(String[] args) {
+	public static void main(String[] args) {
 		
 		String userName;
 		String passWord;
@@ -30,17 +30,19 @@ public class eDepotMain {
 			System.out.println(" --------------------------");
 			System.out.print("\nPick: ");
 			
+			choice = S.next().toUpperCase();
+			
 			switch(choice) {
 			
 				case "1":
 				case "V":{
 					
-					System.out.print("\nPlease enter your username: ");
+					System.out.print("\nPlease enter your username: /n");
 					userName = S.next();
-					System.out.print("Please enter your password: ");
+					System.out.print("Please enter your password: /n");
 					passWord = S.next();
 					
-					depotOBJ.logOn();
+					depotOBJ.logOn(userName, passWord);
 					
 					break;
 					
@@ -63,6 +65,7 @@ public class eDepotMain {
 			
 		} while(!choice.equalsIgnoreCase("Q"));
 		
+		System.out.print("Application Closed.");
 		S.close();
 	}
 	
