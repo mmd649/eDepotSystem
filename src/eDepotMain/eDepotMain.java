@@ -2,9 +2,13 @@ package eDepotMain;
 
 import java.util.Scanner;
 
+import eDepot.Depot;
+
 public class eDepotMain {
 	
 	private final static Scanner S = new Scanner(System.in);
+	
+	static Depot depotOBJ = new Depot();
 	
 	public void main(String[] args) {
 		
@@ -35,6 +39,8 @@ public class eDepotMain {
 					userName = S.next();
 					System.out.print("Please enter your password: ");
 					passWord = S.next();
+					
+					depotOBJ.logOn();
 					
 					break;
 					
