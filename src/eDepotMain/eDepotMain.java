@@ -1,5 +1,9 @@
 package eDepotMain;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import eDepot.Depot;
@@ -42,7 +46,9 @@ public class eDepotMain {
 					System.out.print("Please enter your password: ");
 					passWord = S.next();
 					
-					depotOBJ.logOn(userName, passWord);
+					Depot.logOn(userName, passWord);
+					//depotOBJ.logOn(userName, passWord);
+					
 					
 					break;
 					
@@ -68,6 +74,9 @@ public class eDepotMain {
 		System.out.print("Application Closed.");
 		S.close();
 	}
+	
+	
+	
 	
 
 }
