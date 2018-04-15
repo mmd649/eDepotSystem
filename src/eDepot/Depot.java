@@ -26,22 +26,21 @@ public class Depot {
 
 	public static void logOn(String user, String pass) {
 		// gets input from uses
-		if (userName.contains(user) == true && passWord.contains(pass) == true) {
+		if (userName.contains(user)== true && passWord.contains(pass) == true) {
 			System.out.print("Welcome ");
-			Depot.checkUserJobType(user, pass);
+			Depot.checkUserJobType(user);
 		} else {
 			System.err.print("Sorry username does not match our records!");
 		}
 	}
-	public static void checkUserJobType(String driver, String manager){
-		driver = "driver";
-		manager = "manager";
-		
+	public static void checkUserJobType(String manager){
 		// checks if user is manager or driver.
 		if(jobType.contains(manager)){
-			setupWorkSchedule();
+			System.out.println("\nManager");
+//			setupWorkSchedule();
 		}else{
-			viewWorkschdule();
+			System.out.println("\nDriver");
+//			viewWorkschdule();
 		}
 	}
 	public void loadUsers() {
