@@ -18,7 +18,7 @@ public class Depot {
 
 	private static ArrayList<String> userName = new ArrayList<>();
 	private static ArrayList<String> passWord = new ArrayList<>();
-	private ArrayList<String> jobType = new ArrayList<>();
+	private static ArrayList<String> jobType = new ArrayList<>();
 
 	public Depot() {
 		loadUsers();
@@ -28,12 +28,22 @@ public class Depot {
 		// gets input from uses
 		if (userName.contains(user) == true && passWord.contains(pass) == true) {
 			System.out.print("Welcome ");
-			setupWorkSchedule();
+			Depot.checkUserJobType(user, pass);
 		} else {
-			System.err.print("Sorry username does not match or records!");
+			System.err.print("Sorry username does not match our records!");
 		}
 	}
-
+	public static void checkUserJobType(String driver, String manager){
+		driver = "driver";
+		manager = "manager";
+		
+		// checks if user is manager or driver.
+		if(jobType.contains(manager)){
+			setupWorkSchedule();
+		}else{
+			viewWorkschdule();
+		}
+	}
 	public void loadUsers() {
 		try {
 			Scanner s = new Scanner(Depot.class.getResourceAsStream("/txt/users.txt"));
@@ -56,6 +66,10 @@ public class Depot {
 
 	public Driver getDriver() {
 		return null;
+	}
+	
+	public static void viewWorkschdule(){
+		
 	}
 
 	public static void setupWorkSchedule() {
@@ -100,7 +114,7 @@ public class Depot {
 				input = read.nextLine();
 			} else {
 				// converts string to date
-				DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+				DateFormat sourceFormat = new SimpleDateFormat("dd/mm/yyyy");
 				Date endDate = null;
 				inputValid=false;
 				try {
@@ -144,13 +158,14 @@ public class Depot {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		if (writer.checkError())
+		if (writer.checkError()){
 			try {
 				throw new IOException("Unable to write to file");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		writer.close();
 
 	}
