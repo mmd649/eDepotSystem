@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import eDepot.Depot;
+import eDepot.Tanker;
+import eDepot.Truck;
 
 public class eDepotMain {
 	
 	private final static Scanner S = new Scanner(System.in);
 	
-	static Depot depotOBJ = new Depot();
+	static Depot depotObject = new Depot();
 	
 	public static void main(String[] args) {
 		
@@ -47,8 +49,7 @@ public class eDepotMain {
 					System.out.print("Please enter your password: ");
 					passWord = S.next();
 					
-					Depot.logOn(userName, passWord);
-					//depotOBJ.logOn(userName, passWord);
+					depotObject.logOn(userName, passWord);
 					
 					
 					break;
@@ -56,17 +57,38 @@ public class eDepotMain {
 				}
 				
 				case "2":
-				case "A":{
+				case "S":{
 					
 					break;
 					
 				}
 				
 				case "3":
-				case "R":{
+				case "A":{
+					
+					System.out.print("What type of vehicle do you want to add?: [Truck|Tanker]");
+					String vehicleType = S.next();
+					
+					if(vehicleType.equalsIgnoreCase("Truck")) {
+						
+						addTruck();
+						
+					} else if(vehicleType.equalsIgnoreCase("Tanker")) {
+						
+						addTanker();
+						
+					} else {
+						System.out.println("Invalid vehicle type");
+					}
 					
 					break;
 					
+				}
+				
+				case "4":
+				case "R":{
+					
+					break;
 				}
 			}
 			
@@ -76,8 +98,64 @@ public class eDepotMain {
 		S.close();
 	}
 	
+	/**
+	 * Basic add vehicles (Truck or Tanker) with no error checking. Will be improved later on.
+	 * @return 
+	 */
 	
+	public static Truck addTruck() {
+		
+		String Make, Model, regNo;
+		Integer Weight, cargoCapacity;
+		
+		System.out.print("Please type the vehicle make: ");
+		Make = S.next();
+		
+		System.out.print("\nPlease type the vehicle model: ");
+		Model = S.next();
+		
+		System.out.print("\nPlease type the vehicle weight(KG): ");
+		Weight = S.nextInt();
+		
+		System.out.print("\nPlease type the vehicle registration number: ");
+		regNo = S.next();
+		
+		System.out.println("\nPlease type the maximum cargo capacity: ");
+		cargoCapacity = S.nextInt();
+		
+		Truck newTruck = new Truck(Make, Model, Weight, regNo, cargoCapacity);
+		
+		return newTruck;
+		
+	}
 	
+	public static Tanker addTanker() {
+		
+		String Make, Model, regNo, liquidType;
+		Integer Weight, liquidCapacity;
+		
+		System.out.print("Please type the vehicle make: ");
+		Make = S.next();
+		
+		System.out.print("\nPlease type the vehicle model: ");
+		Model = S.next();
+		
+		System.out.print("\nPlease type the vehicle weight(KG): ");
+		Weight = S.nextInt();
+		
+		System.out.print("\nPlease type the vehicle registration number: ");
+		regNo = S.next();
+		
+		System.out.print("\nPlease type the vehicle liquid type: ");
+		liquidType = S.next();
+		
+		System.out.println("\nPlease type the maximum cargo capacity: ");
+		liquidCapacity = S.nextInt();
+		
+		Tanker newTanker = new Tanker(Make, Model, Weight, regNo, liquidType, liquidCapacity);
+		
+		return newTanker;
+		
+	}
 	
-
 }
