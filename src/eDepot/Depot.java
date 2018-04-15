@@ -42,20 +42,21 @@ public class Depot {
 	}
 
 	public void logOn(String user, String pass) {
-		String manager = "manager";
 		// gets input from uses
 		if (userName.contains(user)) {
-			get(int index = userName.indexOf(user));
-			System.out.print("Welcome ");
-			checkUserJobType(manager);
-		} else {
-			System.err.print("Sorry username does not match our records!");
-		}
+			int index = userName.indexOf(user);
+			if(passWord.get(index).equals(pass)){
+				System.out.print("Welcome ");
+				checkUserJobType(index);
+			}else {
+				System.err.print("Sorry username does not match our records!");
+			}
+		} 
 	}
 	
-	public static void checkUserJobType(String manager){
+	public static void checkUserJobType(int index){
 		// checks if user is manager or driver.
-		if(jobType.contains(manager) == true){
+		if(jobType.get(index).equals("manager")){
 			System.out.println("\nManager");
 //			setupWorkSchedule();
 		}else{
