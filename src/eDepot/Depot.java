@@ -82,7 +82,7 @@ public class Depot {
 		
 		try {
 			
-			Scanner S = new Scanner(Depot.class.getResourceAsStream("txt/Trucks.txt"));
+			Scanner S = new Scanner(Depot.class.getResourceAsStream("/txt/Trucks.txt"));
 			
 			while(S.hasNext()) {
 				
@@ -110,7 +110,7 @@ public class Depot {
 		
 		try {
 			
-			Scanner S = new Scanner(Depot.class.getResourceAsStream("txt/Tankers.txt"));
+			Scanner S = new Scanner(Depot.class.getResourceAsStream("/txt/Tankers.txt"));
 			
 			while(S.hasNext()) {
 				

@@ -124,6 +124,8 @@ public class eDepotMain {
 		cargoCapacity = S.nextInt();
 		
 		Truck newTruck = new Truck(Make, Model, Weight, regNo, cargoCapacity);
+
+		System.out.println("Truck Added.");
 		
 		return newTruck;
 		
@@ -153,6 +155,8 @@ public class eDepotMain {
 		liquidCapacity = S.nextInt();
 		
 		Tanker newTanker = new Tanker(Make, Model, Weight, regNo, liquidType, liquidCapacity);
+		
+		System.out.println("Tanker Added.");
 		
 		return newTanker;
 		
