@@ -60,14 +60,50 @@ public class Depot {
 		Boolean verifyJob;
 		// checks if user is manager or driver.
 		if(jobType.get(index).equals("manager")){
-			System.out.println("\nManager");
 			verifyJob = true;
-//			setupWorkSchedule();
+			Scanner scan = new Scanner(System.in);
+			String choice = "";
+			do {
+				
+				System.out.println("Username: " + userName.get(index));
+				System.out.println("Job Title: " + jobType.get(index));
+				System.out.println("1 - [V]iew Work Schedule  ");
+				System.out.println("2 - [S]et up Work Schedule");
+				System.out.println("3 - [A]dd Vehicle         ");
+				System.out.println("4 - [R]e-Assign Vehicle   ");
+				System.out.println("Q - Logout                ");
+				System.out.println(" --------------------------");
+				System.out.print("\nPick: ");
+				
+				choice = scan.next().toUpperCase();
+				
+				switch(choice) {
+				
+					case "1":
+					case "v":{
+						viewWorkschdule();
+						break;
+						
+					}
+					
+					case "2":
+					case "s":{
+						setupWorkSchedule();
+						break;
+						
+					}
+				}
+				
+			} while(!choice.equalsIgnoreCase("Q"));
+			
+			System.out.print("Logged Out.");
+			scan.close();
 		}else{
-			System.out.println("\nDriver");
-			viewWorkschdule();
 			verifyJob = false;
-//			viewWorkschdule();
+			
+			System.out.println("\nUsername: " + userName.get(index));
+			System.out.println("Job Title: " + jobType.get(index));
+			viewWorkschdule();
 		}
 		return verifyJob;
 	}
