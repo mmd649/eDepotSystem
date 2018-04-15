@@ -53,17 +53,23 @@ public class Depot {
 			}
 		} 
 	}
-	public static boolean checkUserJobType(int index){
+
+	
+	public static Boolean checkUserJobType(int index){
+		
+		Boolean verifyJob;
 		// checks if user is manager or driver.
 		if(jobType.get(index).equals("manager")){
 			System.out.println("\nManager");
+			verifyJob = true;
 //			setupWorkSchedule();
-			return true;
 		}else{
 			System.out.println("\nDriver");
 			viewWorkschdule();
-			return false;
+			verifyJob = false;
+//			viewWorkschdule();
 		}
+		return verifyJob;
 	}
 	
 	public void loadUserDetails() {
