@@ -25,7 +25,6 @@ public class eDepotMain {
 		String choice = "";
 		
 		do {
-			
 			System.out.println("\n __________________________");
 			System.out.println("|     eDepot Main Menu     |");
 			System.out.println("|--------------------------|");
@@ -50,7 +49,13 @@ public class eDepotMain {
 					passWord = S.next();
 					
 					depotObject.logOn(userName, passWord);
+					int index = 0;
 					
+					if(depotObject.checkUserJobType(index)){
+						
+					}else{
+						
+					}
 					
 					break;
 					
