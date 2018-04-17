@@ -1,14 +1,8 @@
 package eDepot;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,11 +27,11 @@ public class Depot {
 	private ArrayList<String> tankerLiquidType = new ArrayList<>();
 	private ArrayList<Integer> tankerLiquidCapacity = new ArrayList<>();
 	
-	private ArrayList<String> vehicleName = new ArrayList<>(); //temporarily stored as string instead of vehicle object
-	private ArrayList<String> driverName = new ArrayList<>();
+	private ArrayList<String> vehicleName = new ArrayList<>(); 
+	private ArrayList<String> driverUsername = new ArrayList<>();
 	private ArrayList<String> clientName = new ArrayList<>();
-	private ArrayList<String> startDate = new ArrayList<>();//start and enddate will temporarily be stored as string for convenience.
-	private ArrayList<String> endDate = new ArrayList<>();
+	private ArrayList<Date> startDate = new ArrayList<>();
+	private ArrayList<Date> endDate = new ArrayList<>();
 	
 
 	public Depot() {
@@ -51,12 +45,18 @@ public class Depot {
 	public void logOn(String user, String pass) {
 		// gets input from uses
 		if (userName.contains(user)) {
+			
 			int index = userName.indexOf(user);
+			
 			if(passWord.get(index).equals(pass)){
+				
 				System.out.print("Welcome ");
 				checkUserJobType(index);
+				
 			}else {
+				
 				System.err.print("Sorry username does not match our records!");
+				
 			}
 		} 
 	}
@@ -86,6 +86,7 @@ public class Depot {
 				passWord.add(line[1]);
 				jobType.add(line[2]);
 			}
+			s.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -159,13 +160,13 @@ public class Depot {
 				String[] line = S.nextLine().split(" ");
 				
 				vehicleName.add(line[0]);
-				driverName.add(line[1]);
+				driverUsername.add(line[1]);
 				clientName.add(line[2]);
-				startDate.add(line[3]);
-				endDate.add(line[4]);
+				startDate.add(new SimpleDateFormat("dd/MM/yyyy").parse(line[3]));
+				endDate.add(new SimpleDateFormat("dd/MM/yyyy").parse(line[4]));
 				
 			}
-			
+			S.close();
 		} catch (Exception e) {
 			System.out.print(e);
 		}
@@ -182,138 +183,6 @@ public class Depot {
 	
 	public static void viewWorkschdule(){
 		
-	}
-
-	public void setupWorkSchedule() {
-		
-		String Client;
-		String input;
-		Scanner read = new Scanner(System.in);
-
-		System.out.print("\nPlease enter Client name: ");
-		Client = read.next();
-		System.out.print("Please enter Start Date[dd/mm/yyyy]: ");
-		input = read.next();
-		
-		// checks if date is real date
-		boolean inputValid = false;
-		String dateRegex = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$"; 
-		
-		do {
-			
-			Boolean validDate = input.matches(dateRegex);
-			
-			if (validDate == false) {
-				
-				System.err.print("\nInvalid start date");
-				System.out.println("\nStart Date[dd/mm/yyyy]:  ");
-				input = read.nextLine();
-				
-			} else {
-				// converts string to date
-				DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
-				Date startDate = null;
-				inputValid=true;
-				
-				try {
-					
-					startDate = sourceFormat.parse(input);
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		} while (inputValid == false);
-		
-		do {
-			
-			System.out.print("Please enter End Date[dd/mm/yyyy]: ");
-			input = read.next();
-			Boolean validDate = input.matches(dateRegex);
-			
-			if (validDate == false) {
-				
-				System.err.print("\nInvalid start date");
-				System.out.println("\nStart Date[dd/mm/yyyy]:  ");
-				input = read.nextLine();
-				
-			} else {
-				// converts string to date
-				DateFormat sourceFormat = new SimpleDateFormat("dd/mm/yyyy");
-				Date endDate = null;
-				inputValid=false;
-				try {
-					
-					endDate = sourceFormat.parse(input);
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		} while (inputValid == true);
-		
-		BufferedReader file = null;
-		try {
-			file = new BufferedReader(new FileReader("txt/workSchedule.txt"));
-		} catch (FileNotFoundException e3) {
-			// TODO Auto-generated catch block
-			e3.printStackTrace();
-		}
-		
-		PrintWriter writer = null;
-		
-		try {
-			
-			writer = new PrintWriter(new File("txt/workSchedule.txt"), "UTF-8");
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		String line;
-		
-		try {
-			
-			while ((line = file.readLine()) != null) {
-				
-				writer.println(Client);
-				
-			}
-			
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		
-		try {
-			
-			file.close();
-			
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		if (writer.checkError()){
-			
-			try {
-				
-				throw new IOException("Unable to write to file");
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		writer.close();
-
 	}
 	
 	 //Truck object will be made using the method written in eDepotMain called addTruck.
@@ -364,11 +233,28 @@ public class Depot {
 
 	}
 	
+	public void addSchedule(WorkSchedule Schedule) {
+		
+		try {
+			
+			vehicleName.add(Schedule.getVehicleName());
+			driverUsername.add(Schedule.getDriverUsername());
+			clientName.add(Schedule.getClientName());
+			startDate.add(Schedule.getStartDate());
+			endDate.add(Schedule.getEndDate());
+			
+		} catch (Exception e) {
+			
+			System.out.print(e);
+		}
+		
+	}
+	
 	private void saveTrucks(){
 		
 		try {
 			
-			PrintWriter pw = new PrintWriter("/txt/Trucks.txt");
+			PrintWriter pw = new PrintWriter(new File("src/txt/Trucks.txt"));
 			
 			for(int x = 0; x < truckMake.size(); x++) {
 				
@@ -394,9 +280,9 @@ public class Depot {
 		
 		try {
 			
-			PrintWriter pw = new PrintWriter("/txt/Trucks.txt");
+			PrintWriter pw = new PrintWriter(new File("src/txt/Tankers.txt"));
 			
-			for(int x = 0; x < truckMake.size(); x++) {
+			for(int x = 0; x < tankerMake.size(); x++) {
 				
 				String a = tankerMake.get(x);
 				String b = tankerModel.get(x);
@@ -419,10 +305,39 @@ public class Depot {
 		
 	}
 	
+	private void saveSchedule() {
+		
+		try {
+			
+			PrintWriter pw = new PrintWriter(new File("src/txt/workSchedule.txt"));
+			
+			DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+			
+			for (int x = 0; x < vehicleName.size(); x++) {
+				
+				String a = vehicleName.get(x);
+				String b = driverUsername.get(x);
+				String c = clientName.get(x);
+				String d = df.format(startDate.get(x));
+				String e = df.format(endDate.get(x));
+				
+				pw.println(a + " " + b + " " + c + " " + d + " " + e);
+				
+			}
+			
+			pw.close();
+		} catch(Exception e) {
+			
+			System.err.print(e);
+		}
+		
+	}
+	
 	public void saveAllChanges(){
 		
 		saveTrucks();
 		saveTankers();
+		saveSchedule();
 		
 	}
 	
