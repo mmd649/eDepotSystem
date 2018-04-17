@@ -1,8 +1,10 @@
 package eDepotMain;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,7 +18,7 @@ public class eDepotMain {
 	
 	static Depot depotObject = new Depot();
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		
 		String userName;
 		String passWord;
@@ -64,6 +66,8 @@ public class eDepotMain {
 				case "2":
 				case "S":{
 					
+					depotObject.setupWorkSchedule();
+					
 					break;
 					
 				}
@@ -71,16 +75,16 @@ public class eDepotMain {
 				case "3":
 				case "A":{
 					
-					System.out.print("What type of vehicle do you want to add?: [Truck|Tanker]");
+					System.out.println("What type of vehicle do you want to add?: [Truck|Tanker] ");
 					String vehicleType = S.next();
 					
 					if(vehicleType.equalsIgnoreCase("Truck")) {
 						
-						addTruck();
-						
+						depotObject.addTruck(newTruck());
+
 					} else if(vehicleType.equalsIgnoreCase("Tanker")) {
 						
-						addTanker();
+						depotObject.addTanker(newTanker());
 						
 					} else {
 						System.out.println("Invalid vehicle type");
@@ -100,15 +104,14 @@ public class eDepotMain {
 		} while(!choice.equalsIgnoreCase("Q"));
 		
 		System.out.print("Application Closed.");
+		depotObject.saveAllChanges();
 		S.close();
 	}
 	
-	/**
-	 * Basic add vehicles (Truck or Tanker) with no error checking. Will be improved later on.
-	 * @return 
-	 */
+
+//	 Basic add vehicles (Truck or Tanker) with no error checking. Will be improved later on.
 	
-	public static Truck addTruck() {
+	public static Truck newTruck() {
 		
 		String Make, Model, regNo;
 		Integer Weight, cargoCapacity;
@@ -129,14 +132,12 @@ public class eDepotMain {
 		cargoCapacity = S.nextInt();
 		
 		Truck newTruck = new Truck(Make, Model, Weight, regNo, cargoCapacity);
-
-		System.out.println("Truck Added.");
 		
 		return newTruck;
 		
 	}
 	
-	public static Tanker addTanker() {
+	public static Tanker newTanker() {
 		
 		String Make, Model, regNo, liquidType;
 		Integer Weight, liquidCapacity;
@@ -160,8 +161,6 @@ public class eDepotMain {
 		liquidCapacity = S.nextInt();
 		
 		Tanker newTanker = new Tanker(Make, Model, Weight, regNo, liquidType, liquidCapacity);
-		
-		System.out.println("Tanker Added.");
 		
 		return newTanker;
 		

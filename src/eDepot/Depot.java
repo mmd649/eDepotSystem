@@ -32,6 +32,13 @@ public class Depot {
 	private ArrayList<String> tankerRegNo = new ArrayList<>();
 	private ArrayList<String> tankerLiquidType = new ArrayList<>();
 	private ArrayList<Integer> tankerLiquidCapacity = new ArrayList<>();
+	
+	private ArrayList<String> vehicleName = new ArrayList<>(); //temporarily stored as string instead of vehicle object
+	private ArrayList<String> driverName = new ArrayList<>();
+	private ArrayList<String> clientName = new ArrayList<>();
+	private ArrayList<String> startDate = new ArrayList<>();//start and enddate will temporarily be stored as string for convenience.
+	private ArrayList<String> endDate = new ArrayList<>();
+	
 
 	public Depot() {
 		
@@ -140,6 +147,30 @@ public class Depot {
 		}
 		
 	}
+	
+	public void loadScheduleDetails() {
+		
+		try {
+			
+			Scanner S = new Scanner(Depot.class.getResourceAsStream("/txt/workSchedule.txt"));
+			
+			while(S.hasNext()) {
+				
+				String[] line = S.nextLine().split(" ");
+				
+				vehicleName.add(line[0]);
+				driverName.add(line[1]);
+				clientName.add(line[2]);
+				startDate.add(line[3]);
+				endDate.add(line[4]);
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.print(e);
+		}
+		
+	}
 
 	public Vehicle getVehicle() {
 		return null;
@@ -153,7 +184,7 @@ public class Depot {
 		
 	}
 
-	public static void setupWorkSchedule() {
+	public void setupWorkSchedule() {
 		
 		String Client;
 		String input;
@@ -285,11 +316,9 @@ public class Depot {
 
 	}
 	
-	/**
-	 * Truck object will be made using the method written in eDepotMain called addTruck.
-	 * addTruck in Depot class will take in a truck as its parameter. This will add the truck details to the current records.
-	 * @param truck
-	 */
+	 //Truck object will be made using the method written in eDepotMain called addTruck.
+	 //addTruck in Depot class will take in a truck as its parameter. This will add the truck details to the current records.
+
 	public void addTruck(Truck truck) {
 		
 		try {
@@ -311,11 +340,9 @@ public class Depot {
 	}
 	
 	
-	/**
-	 * Tanker object will be made using the method written in eDepotMain called addTanker.
-	 * addTanker in Depot class will take in a tanker as its parameter. This will add the tanker details to the current records.
-	 * @param tanker
-	 */
+
+	 //Tanker object will be made using the method written in eDepotMain called addTanker.
+	 //addTanker in Depot class will take in a tanker as its parameter. This will add the tanker details to the current records.
 	public void addTanker(Tanker tanker) {
 		
 		try {
@@ -337,44 +364,65 @@ public class Depot {
 
 	}
 	
-	public void saveTrucks() throws FileNotFoundException {
+	private void saveTrucks(){
 		
-		PrintWriter pw = new PrintWriter("/txt/Trucks.txt");
-		
-		for(int x = 0; x < truckMake.size(); x++) {
+		try {
 			
-			String a = truckMake.get(x);
-			String b = truckModel.get(x);
-			String c = Integer.toString(truckWeight.get(x));
-			String d = truckRegNo.get(x);
-			String e = Integer.toString(truckCargoCapacity.get(x));
+			PrintWriter pw = new PrintWriter("/txt/Trucks.txt");
 			
-			pw.println(a + " " + b + " " + c + " " + d + " " + e);
+			for(int x = 0; x < truckMake.size(); x++) {
+				
+				String a = truckMake.get(x);
+				String b = truckModel.get(x);
+				String c = Integer.toString(truckWeight.get(x));
+				String d = truckRegNo.get(x);
+				String e = Integer.toString(truckCargoCapacity.get(x));
+				
+				pw.println(a + " " + b + " " + c + " " + d + " " + e);
+				
+			}
 			
+			pw.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		pw.close();
 		
 	}
 	
-	public void saveTankers() throws FileNotFoundException {
+	private void saveTankers() {
 		
-		PrintWriter pw = new PrintWriter("/txt/Trucks.txt");
-		
-		for(int x = 0; x < truckMake.size(); x++) {
+		try {
 			
-			String a = tankerMake.get(x);
-			String b = tankerModel.get(x);
-			String c = Integer.toString(tankerWeight.get(x));
-			String d = tankerRegNo.get(x);
-			String e = tankerLiquidType.get(x);
-			String f = Integer.toString(tankerLiquidCapacity.get(x));
+			PrintWriter pw = new PrintWriter("/txt/Trucks.txt");
 			
-			pw.println(a + " " + b + " " + c + " " + d + " " + e + " " + f);
+			for(int x = 0; x < truckMake.size(); x++) {
+				
+				String a = tankerMake.get(x);
+				String b = tankerModel.get(x);
+				String c = Integer.toString(tankerWeight.get(x));
+				String d = tankerRegNo.get(x);
+				String e = tankerLiquidType.get(x);
+				String f = Integer.toString(tankerLiquidCapacity.get(x));
+				
+				pw.println(a + " " + b + " " + c + " " + d + " " + e + " " + f);
+				
+			}
+			
+			pw.close();
+			
+		} catch (Exception e) {
+			
+			System.out.println(e);
 			
 		}
 		
-		pw.close();
+	}
+	
+	public void saveAllChanges(){
+		
+		saveTrucks();
+		saveTankers();
 		
 	}
 	
