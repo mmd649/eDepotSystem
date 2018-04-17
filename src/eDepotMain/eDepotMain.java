@@ -221,7 +221,7 @@ public class eDepotMain {
 			
 			if (validDate == false) {
 				
-				System.err.print("\nInvalid start date");
+//				System.err.print("\nInvalid start date");
 				System.out.println("\nStart Date[dd/mm/yyyy]:  ");
 				input = read.nextLine();
 				

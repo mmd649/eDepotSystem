@@ -39,6 +39,7 @@ public class Depot {
 		loadUserDetails();
 		loadTruckDetails();
 		loadTankerDetails();
+		loadScheduleDetails();
 		
 	}
 
