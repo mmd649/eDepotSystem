@@ -316,8 +316,16 @@ public class eDepotMain {
 		
 		WorkSchedule newSchedule = new WorkSchedule(vehicleRegNo, driverUsername, clientName, startDate, endDate);
 		System.out.printf("%s %s", startDate, endDate);
-		
-
+		try(FileWriter fw = new FileWriter("src/txt/workSchedule.txt", true);
+			    BufferedWriter bw = new BufferedWriter(fw);
+			    PrintWriter out = new PrintWriter(bw))
+			{
+			    out.println(vehicleRegNo+" "+driverUsername+" "+clientName+" "+startDate+" "+endDate);
+			    System.out.println("New work schedule added");
+			} catch (IOException e) {
+			    System.err.println("unable to add work schedule");
+			}
+	
 	
 		return newSchedule;
 		
