@@ -182,28 +182,28 @@ public class Depot {
 				
 				int index = truckRegNo.indexOf(regNo);
 				
-				System.out.println("\n-------------");
+				System.out.println("\n-----------------------");
 				System.out.println("Truck Details");
-				System.out.println("-------------");
-				System.out.println("Make: " + truckMake.get(index));
-				System.out.println("Model: " + truckModel.get(index));
-				System.out.println("Weight: " + truckWeight.get(index));
-				System.out.println("Registration Number: " + truckRegNo.get(index));
-				System.out.println("Cargo Capacity: " + truckCargoCapacity.get(index));
+				System.out.println("-----------------------");
+				System.out.println("Make: " + truckMake.get(index) + "|");
+				System.out.println("Model: " + truckModel.get(index) + "|");
+				System.out.println("Weight: " + truckWeight.get(index) + "|");
+				System.out.println("Registration Number: " + truckRegNo.get(index) + "|");
+				System.out.println("Cargo Capacity: " + truckCargoCapacity.get(index) + "|");
 				
 			} else if (tankerRegNo.contains(regNo)) {
 				
 				int index = tankerRegNo.indexOf(regNo);
 				
-				System.out.println("\n-------------");
-				System.out.println("Tanker Details");
-				System.out.println("-------------");
-				System.out.println("Make: " + tankerMake.get(index));
-				System.out.println("Model: " + tankerModel.get(index));
-				System.out.println("Weight: " + tankerWeight.get(index));
-				System.out.println("Registration Number: " + tankerRegNo.get(index));
-				System.out.println("Liquid Type: " + tankerLiquidType.get(index));
-				System.out.println("Liquid Capacity: " + tankerLiquidCapacity.get(index));
+				System.out.println("\n----------------------------");
+				System.out.println("     Tanker Details     |");
+				System.out.println("----------------------------");
+				System.out.println("Make: " + tankerMake.get(index) + "       |");
+				System.out.println("Model: " + tankerModel.get(index) + "       |");
+				System.out.println("Weight: " + tankerWeight.get(index) + "       |");
+				System.out.println("Registration Number: " + tankerRegNo.get(index) + "       |");
+				System.out.println("Liquid Type: " + tankerLiquidType.get(index) + "       |");
+				System.out.println("Liquid Capacity: " + tankerLiquidCapacity.get(index) + "       |");
 				
 			} else {
 				

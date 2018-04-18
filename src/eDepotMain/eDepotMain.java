@@ -29,6 +29,7 @@ public class eDepotMain {
 			System.out.println("|2 - [S]et up Work Schedule|");
 			System.out.println("|3 - [A]dd Vehicle         |");
 			System.out.println("|4 - [R]e-Assign Vehicle   |");
+			System.out.println("|4 - [G]et Vehicle Details |");
 			System.out.println("|Q - Quit                  |");
 			System.out.println(" --------------------------");
 			System.out.print("\nPick: ");
@@ -93,6 +94,12 @@ public class eDepotMain {
 				case "R":{
 					
 					break;
+				}
+				
+				case "5":
+				case "G":{
+					System.out.println("Please enter the vehicle's registration number: ");
+					depotObject.getVehicle(S.next().toUpperCase());
 				}
 			}
 			
