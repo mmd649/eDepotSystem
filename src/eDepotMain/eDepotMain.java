@@ -1,5 +1,9 @@
 package eDepotMain;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -168,7 +172,9 @@ public class eDepotMain {
 		
 	}
 	
-	public static WorkSchedule newSchedule() {
+//	 Basic add work schedule 
+	
+	public static WorkSchedule newSchedule() {		
 		
 		String vehicleRegNo, driverUsername, clientName;
 		Date startDate = null, endDate = null;
@@ -178,6 +184,7 @@ public class eDepotMain {
 		
 		System.out.print("\nPlease enter the driver's username: ");
 		driverUsername = S.next();
+
 		
 		System.out.print("\nPlease enter Client name: ");
 		clientName = S.next();
@@ -217,7 +224,7 @@ public class eDepotMain {
 		
 		do {
 			
-			System.out.print("\nPlease enter the start date of the schedule(dd/mm/yyyy): ");
+			System.out.print("\nPlease enter the end date of the schedule(dd/mm/yyyy): ");
 			String temp = S.next();
 			
 			Boolean validDate = temp.matches(dateRegex);
@@ -229,19 +236,24 @@ public class eDepotMain {
 				try {
 					
 					endDate = sourceFormat.parse(temp);
-					
+					if (endDate.before(startDate)){
+						System.err.println("End date can't be before start date");
+					}else{
+					inputValid = false;					
+					}
 				} catch (Exception e) {
 					
 					System.out.println(e);
+
 				}
 				
 			} else {
 				
-				System.err.print("\nInvalid start date");
+				System.err.print("\nInvalid end date");
 				
 			}
 			
-		} while(!inputValid);
+		} while(inputValid);
 		
 /*		do {
 			
@@ -304,6 +316,9 @@ public class eDepotMain {
 		
 		WorkSchedule newSchedule = new WorkSchedule(vehicleRegNo, driverUsername, clientName, startDate, endDate);
 		System.out.printf("%s %s", startDate, endDate);
+		
+
+	
 		return newSchedule;
 		
 	}
