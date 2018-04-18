@@ -19,11 +19,7 @@ public class eDepotMain {
 	
 	public static void main(String[] args){
 		
-		String userName;
-		String passWord;
-		
-	
-		String choice = "";
+		String userName, passWord, choice = "";
 		
 		do {
 			System.out.println("\n __________________________");
@@ -167,24 +163,80 @@ public class eDepotMain {
 	
 	public static WorkSchedule newSchedule() {
 		
-		String vehicleRegNo, driverUsername, clientName, input;
+		String vehicleRegNo, driverUsername, clientName;
 		Date startDate = null, endDate = null;
 		
-		Scanner read = new Scanner(System.in);
-		
 		System.out.print("\nPlease enter the vehicle registration number: ");
-		vehicleRegNo = read.next();
+		vehicleRegNo = S.next();
 		
 		System.out.print("\nPlease enter the driver's username: ");
-		driverUsername = read.next();
+		driverUsername = S.next();
 		
 		System.out.print("\nPlease enter Client name: ");
-		clientName = read.next();
+		clientName = S.next();
 		
 		boolean inputValid = false;
 		String dateRegex = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$"; 
 		
 		do {
+			
+			System.out.print("\nPlease enter the start date of the schedule(dd/mm/yyyy): ");
+			String temp = S.next();
+			
+			Boolean validDate = temp.matches(dateRegex);
+			
+			if(validDate) {
+				
+				DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+				
+				try {
+					
+					startDate = sourceFormat.parse(temp);
+					inputValid = true;
+					
+				} catch (Exception e) {
+					
+					System.out.println(e);
+				}
+
+				
+			} else {
+				
+				System.err.print("\nInvalid start date");
+				
+			}
+			
+		} while(!inputValid);
+		
+		do {
+			
+			System.out.print("\nPlease enter the start date of the schedule(dd/mm/yyyy): ");
+			String temp = S.next();
+			
+			Boolean validDate = temp.matches(dateRegex);
+			
+			if(validDate) {
+				
+				DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+				
+				try {
+					
+					endDate = sourceFormat.parse(temp);
+					
+				} catch (Exception e) {
+					
+					System.out.println(e);
+				}
+				
+			} else {
+				
+				System.err.print("\nInvalid start date");
+				
+			}
+			
+		} while(!inputValid);
+		
+/*		do {
 			
 			System.out.print("Please enter Start Date[dd/mm/yyyy]: ");
 			input = read.next();
@@ -241,10 +293,10 @@ public class eDepotMain {
 				
 			}
 			
-		} while (inputValid == true);
+		} while (inputValid == true); */
 		
 		WorkSchedule newSchedule = new WorkSchedule(vehicleRegNo, driverUsername, clientName, startDate, endDate);
-		read.close();
+		System.out.printf("%s %s", startDate, endDate);
 		return newSchedule;
 		
 	}
