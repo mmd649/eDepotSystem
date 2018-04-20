@@ -61,13 +61,24 @@ public class eDepotMain {
 					System.out.print("Please enter your password: ");
 					passWord = S.next();
 					
-					depotObject.logOn(userName, passWord);
-					int index = 0;
-					
-					if(depotObject.checkUserJobType(index).toString()=="true"){
-						Menu("manager");
-					}else{
-						Menu("driver");
+					if(depotObject.logOn(userName, passWord)) {
+						
+						// if true, display manager menu
+						if(depotObject.checkUserJobType(depotObject.getIndex(userName))) {
+							
+							Menu("Manager");
+							
+						} else {
+							
+							Menu("Driver");
+							
+						}
+						
+					//if false, display driver menu	
+					} else {
+						
+						System.out.println("Login failed. Username entered was not found.");
+						
 					}
 					
 					break;
