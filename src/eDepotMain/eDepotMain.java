@@ -226,6 +226,7 @@ public class eDepotMain {
 		
 		System.out.print("\nPlease type the vehicle weight(KG): ");
 		Weight = S.nextInt();
+
 		
 		System.out.print("\nPlease type the vehicle registration number: ");
 		//ASSUMPUTION - Only UK REGISTRATION NUMBERS validation two upper case characters followed by two numbers followed by three upper case characters
@@ -245,7 +246,7 @@ public class eDepotMain {
 			
 		
 			
-		System.out.println("\nPlease type the maximum cargo capacity: ");
+		System.out.println("\nPlease type the maximum cargo capacity(KG): ");
 		cargoCapacity = S.nextInt();
 		
 		Truck newTruck = new Truck(Make, Model, Weight, regNo, cargoCapacity);

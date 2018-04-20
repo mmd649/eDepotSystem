@@ -10,16 +10,22 @@ import java.util.Scanner;
 
 public class Depot {
 
+	//An arraylist for each attributes which makes up a user.
+	private ArrayList<String> userDepot = new ArrayList<>();
 	private static ArrayList<String> userName = new ArrayList<>();
 	private static ArrayList<String> passWord = new ArrayList<>();
 	private static ArrayList<String> jobType = new ArrayList<>();
 	
+	//An arraylist for each attributes which makes up a truck.
+	private ArrayList<String> truckDepot = new ArrayList<>();
 	private ArrayList<String> truckMake = new ArrayList<>();
 	private ArrayList<String> truckModel = new ArrayList<>();
 	private ArrayList<Integer> truckWeight = new ArrayList<>();
 	private ArrayList<String> truckRegNo = new ArrayList<>();
 	private ArrayList<Integer> truckCargoCapacity = new ArrayList<>();
 	
+	//An arraylist for each attributes which makes up a tanker.
+	private ArrayList<String> tankerDepot = new ArrayList<>();
 	private ArrayList<String> tankerMake = new ArrayList<>();
 	private ArrayList<String> tankerModel = new ArrayList<>();
 	private ArrayList<Integer> tankerWeight = new ArrayList<>();
@@ -27,6 +33,7 @@ public class Depot {
 	private ArrayList<String> tankerLiquidType = new ArrayList<>();
 	private ArrayList<Integer> tankerLiquidCapacity = new ArrayList<>();
 	
+	//An arraylist for each attributes which makes up a schedule.
 	private ArrayList<String> vehicleName = new ArrayList<>(); 
 	private ArrayList<String> driverUsername = new ArrayList<>();
 	private ArrayList<String> clientName = new ArrayList<>();
@@ -98,6 +105,7 @@ public class Depot {
 				userName.add(line[0]);
 				passWord.add(line[1]);
 				jobType.add(line[2]);
+				userDepot.add(line[3]);
 			}
 			s.close();
 		} catch (Exception e) {
@@ -115,11 +123,12 @@ public class Depot {
 				
 				String[] line = S.nextLine().split(" ");
 				
-				truckMake.add(line[0]);
-				truckModel.add(line[1]);
-				truckWeight.add(Integer.parseInt(line[2]));
-				truckRegNo.add(line[3]);
-				truckCargoCapacity.add(Integer.parseInt(line[4]));
+				truckDepot.add(line[0]);
+				truckMake.add(line[1]);
+				truckModel.add(line[2]);
+				truckWeight.add(Integer.parseInt(line[3]));
+				truckRegNo.add(line[4]);
+				truckCargoCapacity.add(Integer.parseInt(line[5]));
 				
 			}
 			
@@ -143,12 +152,13 @@ public class Depot {
 				
 				String[] line = S.nextLine().split(" ");
 				
-				tankerMake.add(line[0]);
-				tankerModel.add(line[1]);
-				tankerWeight.add(Integer.parseInt(line[2]));
-				tankerRegNo.add(line[3]);
-				tankerLiquidType.add(line[4]);
-				tankerLiquidCapacity.add(Integer.parseInt(line[5]));
+				tankerDepot.add(line[0]);
+				tankerMake.add(line[1]);
+				tankerModel.add(line[2]);
+				tankerWeight.add(Integer.parseInt(line[3]));
+				tankerRegNo.add(line[4]);
+				tankerLiquidType.add(line[5]);
+				tankerLiquidCapacity.add(Integer.parseInt(line[6]));
 				
 			}
 			
@@ -315,6 +325,38 @@ public class Depot {
 		} catch (Exception e) {
 			
 			System.out.print(e);
+		}
+		
+	}
+	
+	public void transferVehicle(String vehicleType, String vehicleRegNo,  String newDepot) {
+		
+		if(vehicleType.equalsIgnoreCase("Truck")) {
+			
+			try {
+				
+				int index = truckRegNo.indexOf(vehicleRegNo);
+				truckDepot.add(index, newDepot);
+				System.out.println("Vehicle transferred.");
+				
+			} catch (Exception e) {
+				
+				System.err.println("No vehicle found with that registration number.");
+			}
+			
+		} else if(vehicleType.equalsIgnoreCase("Tanker")) {
+			
+			try {
+				
+				int index = tankerRegNo.indexOf(vehicleRegNo);
+				tankerDepot.add(index, newDepot);
+				System.out.println("Vehicle transferred.");
+				
+			} catch (Exception e) {
+				
+				System.err.println("No vehicle found with that registration number.");
+			}
+			
 		}
 		
 	}
