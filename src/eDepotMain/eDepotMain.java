@@ -132,8 +132,23 @@ public class eDepotMain {
 		Weight = S.nextInt();
 		
 		System.out.print("\nPlease type the vehicle registration number: ");
-		regNo = S.next();
+		//ASSUMPUTION - Only UK REGISTRATION NUMBERS validation two upper case characters followed by two numbers followed by three upper case characters
+		String regRegex ="(?<Current>^[A-Z]{2}[0-9]{2}[A-Z]{3}$)|(?<Prefix>^[A-Z][0-9]{1,3}[A-Z]{3}$)|(?<Suffix>^[A-Z]{3}[0-9]{1,3}[A-Z]$)|(?<DatelessLongNumberPrefix>^[0-9]{1,4}[A-Z]{1,2}$)|(?<DatelessShortNumberPrefix>^[0-9]{1,3}[A-Z]{1,3}$)|(?<DatelessLongNumberSuffix>^[A-Z]{1,2}[0-9]{1,4}$)|(?<DatelessShortNumberSufix>^[A-Z]{1,3}[0-9]{1,3}$)";
+		Boolean inputValid = true;
+			do {				
+				System.out.print("\nPlease enter the end date of the schedule(dd/mm/yyyy): ");
+				regNo = S.next();			
+				Boolean validReg = regNo.matches(regRegex);		
+				if(validReg) {
+					inputValid=false;
+				} else {
+					
+					System.err.print("\nInvalid vehicle registration number- please make sure reg number is upper case");		
+				}
+			} while(inputValid);
+			
 		
+			
 		System.out.println("\nPlease type the maximum cargo capacity: ");
 		cargoCapacity = S.nextInt();
 		
@@ -158,7 +173,21 @@ public class eDepotMain {
 		Weight = S.nextInt();
 		
 		System.out.print("\nPlease type the vehicle registration number: ");
-		regNo = S.next();
+		//ASSUMPUTION - Only UK REGISTRATION NUMBERS validation two upper case characters followed by two numbers followed by three upper case characters
+		String regRegex ="(?<Current>^[A-Z]{2}[0-9]{2}[A-Z]{3}$)|(?<Prefix>^[A-Z][0-9]{1,3}[A-Z]{3}$)|(?<Suffix>^[A-Z]{3}[0-9]{1,3}[A-Z]$)|(?<DatelessLongNumberPrefix>^[0-9]{1,4}[A-Z]{1,2}$)|(?<DatelessShortNumberPrefix>^[0-9]{1,3}[A-Z]{1,3}$)|(?<DatelessLongNumberSuffix>^[A-Z]{1,2}[0-9]{1,4}$)|(?<DatelessShortNumberSufix>^[A-Z]{1,3}[0-9]{1,3}$)";
+		Boolean inputValid = true;
+			do {				
+				System.out.print("\nPlease enter the end date of the schedule(dd/mm/yyyy): ");
+				regNo = S.next();			
+				Boolean validReg = regNo.matches(regRegex);		
+				if(validReg) {
+					inputValid=false;
+				} else {
+					
+					System.err.print("\nInvalid vehicle registration number- please make sure reg number is upper case");		
+				}
+			} while(inputValid);
+			
 		
 		System.out.print("\nPlease type the vehicle liquid type: ");
 		liquidType = S.next();
