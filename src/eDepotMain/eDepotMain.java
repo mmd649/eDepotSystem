@@ -15,6 +15,8 @@ package eDepotMain;
  * 
  */
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,7 +85,7 @@ public class eDepotMain {
 	
 	public static void Menu(String userType){
 		String choice="";
-		if (userType=="manager"){
+		if (userType=="driver"){
 		do {
 			System.out.println("\n __________________________");
 			System.out.println("|     eDepot manager Menu  |");
@@ -295,8 +297,27 @@ public class eDepotMain {
 		String vehicleRegNo, driverUsername, clientName;
 		Date startDate = null, endDate = null;
 		
-		System.out.print("\nPlease enter the vehicle registration number: ");
-		vehicleRegNo = S.next();
+		//Checks if registration number exists in the system
+		boolean valid=false;
+
+	do{
+			System.out.print("\nPlease enter the vehicle registration number: ");
+			vehicleRegNo = S.next();			
+			File file = new File("src/txt/Trucks.txt");
+			try {
+			    Scanner scanner = new Scanner(file);
+			    int lineNo = 0;
+			    while (scanner.hasNextLine()) {
+			        String line = scanner.nextLine();
+			        lineNo++;
+			        if(line.contains(vehicleRegNo)) { 			        	
+			            valid=true; //Vehicle does exist in the system
+			        }
+			    }
+			} catch(FileNotFoundException e) { 
+			}
+	}while(!valid);
+
 		
 		System.out.print("\nPlease enter the driver's username: ");
 		driverUsername = S.next();
