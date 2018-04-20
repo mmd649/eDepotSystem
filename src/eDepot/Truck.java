@@ -1,5 +1,19 @@
 package eDepot;
 
+/**
+ * Truck information for eDepot.
+ * 
+ * Truck is an extension of "Vehicle".
+ * 
+ * Has the following attributes:
+ * make
+ * model
+ * weight
+ * regNo
+ * cargoCapacity
+ * 
+ */
+
 public class Truck extends Vehicle{
 	
 	private int cargoCapacity;

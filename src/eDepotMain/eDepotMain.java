@@ -1,11 +1,24 @@
 package eDepotMain;
-
+/**
+ * Menu system for interfacing with eDepot.
+ * 
+ * "Driver" and "Manager" each have separate menu options.
+ * These are accessed by first; logging in, depending on "userType" they will be redirected accordingly.
+ * 
+ * Manager has access to:      User has access to:
+ * [V]iew work schedule        [V]iew work schedule
+ * [S]et up Work Schedule      [G]et Vehicle Details
+ * [A]dd Vehicle
+ * [R]e-Assign Vehicle
+ * [G]et Vehicle Details
+ * [N]ew Driver
+ * 
+ */
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
