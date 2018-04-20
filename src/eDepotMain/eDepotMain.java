@@ -34,11 +34,11 @@ public class eDepotMain {
 	
 	private final static Scanner S = new Scanner(System.in);
 	
+	private static String userName, passWord, choice = "";
+	
 	static Depot depotObject = new Depot();
 	
 	public static void main(String[] args){
-		
-		String userName, passWord, choice = "";
 		
 		do {
 			System.out.println("\n __________________________");
@@ -84,21 +84,24 @@ public class eDepotMain {
 	}
 	
 	public static void Menu(String userType){
+		
 		String choice="";
-		if (userType=="driver"){
-		do {
-			System.out.println("\n __________________________");
-			System.out.println("|     eDepot manager Menu  |");
-			System.out.println("|--------------------------|");
-			System.out.println("|1 - [V]iew work schedule  |");
-			System.out.println("|2 - [S]et up Work Schedule|");
-			System.out.println("|3 - [A]dd Vehicle         |");
-			System.out.println("|4 - [R]e-Assign Vehicle   |");
-			System.out.println("|5 - [G]et Vehicle Details |");
-			System.out.println("|6 - [N]ew Driver          |");
-			System.out.println("|Q - Quit                  |");
-			System.out.println(" --------------------------");
-			System.out.print("\nPick: ");
+		
+		if (userType.equalsIgnoreCase("Manager")){
+			
+			do {
+				System.out.println("\n __________________________");
+				System.out.println("|     eDepot manager Menu  |");
+				System.out.println("|--------------------------|");
+				System.out.println("|1 - [V]iew work schedule  |");
+				System.out.println("|2 - [S]et up Work Schedule|");
+				System.out.println("|3 - [A]dd Vehicle         |");
+				System.out.println("|4 - [R]e-Assign Vehicle   |");
+				System.out.println("|5 - [G]et Vehicle Details |");
+				System.out.println("|6 - [N]ew Driver          |");
+				System.out.println("|L - Logout                |");
+				System.out.println(" --------------------------");
+				System.out.print("\nPick: ");
 			
 			choice = S.next().toUpperCase();
 			
@@ -106,7 +109,7 @@ public class eDepotMain {
 			
 			case "1":
 			case "V":{
-				
+				depotObject.viewWorkschdule(userName);
 				break;
 				
 			}
@@ -160,19 +163,16 @@ public class eDepotMain {
 				}
 			}
 			
-		} while(!choice.equalsIgnoreCase("Q"));
+		} while(!choice.equalsIgnoreCase("L"));
 		
-		System.out.print("Application Closed.");
-		depotObject.saveAllChanges();
-		S.close();
-	}else{
+	}else if (userType.equalsIgnoreCase("Driver")){
 		do {
 			System.out.println("\n __________________________");
 			System.out.println("|     eDepot driver  Menu  |");
 			System.out.println("|--------------------------|");
 			System.out.println("|1 - [V]iew work schedule  |");
 			System.out.println("|2 - [G]et Vehicle Details |");
-			System.out.println("|Q - Quit                  |");
+			System.out.println("|L - Logout                |");
 			System.out.println(" --------------------------");
 			System.out.print("\nPick: ");
 			
@@ -182,7 +182,7 @@ public class eDepotMain {
 			
 			case "1":
 			case "V":{
-				
+				depotObject.viewWorkschdule(userName);
 				break;
 				
 			}
@@ -194,13 +194,9 @@ public class eDepotMain {
 				}
 			}
 			
-		} while(!choice.equalsIgnoreCase("Q"));
+		} while(!choice.equalsIgnoreCase("L"));
 		
-		System.out.print("Application Closed.");
-		depotObject.saveAllChanges();
-		S.close();
-		
-	}
+		}
 	}
 	
 
@@ -392,77 +388,9 @@ public class eDepotMain {
 			
 		} while(inputValid);
 		
-/*		do {
-			
-			System.out.print("Please enter Start Date[dd/mm/yyyy]: ");
-			input = read.next();
-			
-			Boolean validDate = input.matches(dateRegex);
-			
-			if (validDate == false) {
-				
-				System.err.print("\nInvalid start date");
-				System.out.println("\nStart Date[dd/mm/yyyy]:  ");
-				input = read.nextLine();
-				
-			} else {
-				// converts string to date
-				DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
-				inputValid=true;
-				
-				try {
-					
-					startDate = sourceFormat.parse(input);
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		} while (inputValid == false);
-		
-		do {
-			
-			System.out.print("Please enter End Date[dd/mm/yyyy]: ");
-			input = read.next();
-			Boolean validDate = input.matches(dateRegex);
-			
-			if (validDate == false) {
-				
-//				System.err.print("\nInvalid start date");
-				System.out.println("\nStart Date[dd/mm/yyyy]:  ");
-				input = read.nextLine();
-				
-			} else {
-				// converts string to date
-				DateFormat sourceFormat = new SimpleDateFormat("dd/mm/yyyy");
-				inputValid=false;
-				
-				try {
-					
-					endDate = sourceFormat.parse(input);
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
-		} while (inputValid == true); */
-		
 		WorkSchedule newSchedule = new WorkSchedule(vehicleRegNo, driverUsername, clientName, startDate, endDate);
+		System.out.println("New work schedule added");
 		System.out.printf("%s %s", startDate, endDate);
-		try(FileWriter fw = new FileWriter("src/txt/workSchedule.txt", true);
-			    BufferedWriter bw = new BufferedWriter(fw);
-			    PrintWriter out = new PrintWriter(bw))
-			{
-			    out.println(vehicleRegNo+" "+driverUsername+" "+clientName+" "+startDate+" "+endDate);
-			    System.out.println("New work schedule added");
-			} catch (IOException e) {
-			    System.err.println("unable to add work schedule");
-			}
-	
 	
 		return newSchedule;
 		

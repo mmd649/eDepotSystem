@@ -43,7 +43,10 @@ public class Depot {
 		
 	}
 
-	public void logOn(String user, String pass) {
+	public boolean logOn(String user, String pass) {
+		
+		boolean authenticate = false;
+		
 		// gets input from uses
 		if (userName.contains(user)) {
 			
@@ -51,17 +54,26 @@ public class Depot {
 			
 			if(passWord.get(index).equals(pass)){
 				
-				System.out.print("Welcome ");
-				checkUserJobType(index);
+				System.out.print("\nWelcome " + user);
+				authenticate = true;
 				
 			}else {
 				
 				System.err.print("Sorry username does not match our records!");
+				authenticate = false;
 				
 			}
-		} 
+		}
+		return authenticate;
 	}
-
+	
+	public int getIndex(String username) {
+		
+		int index = userName.indexOf(username);
+		
+		return index;
+		
+	}
 	
 	public Boolean checkUserJobType(int index){
 		
@@ -222,8 +234,24 @@ public class Depot {
 		return null;
 	}
 	
-	public static void viewWorkschdule(){
+	public void viewWorkschdule(String driver){
 		
+		try {
+			
+			int index = driverUsername.indexOf(driver);
+			System.out.println("Displaying schedule for user: " + driver);
+			System.out.println("---------------------------------------");
+			System.out.println("Vehicle - " + vehicleName.get(index));
+			System.out.println("clientName - " + clientName.get(index));
+			System.out.println("Start Date - " + startDate.get(index));
+			System.out.println("End Date - " + endDate.get(index));
+			
+			
+		} catch(Exception e) {
+			
+			System.err.println("No driver found with that username");
+			
+		}
 	}
 	
 	 //Truck object will be made using the method written in eDepotMain called addTruck.
@@ -369,7 +397,7 @@ public class Depot {
 			pw.close();
 		} catch(Exception e) {
 			
-			System.err.print(e);
+			System.err.println("Unable to add work schedule");
 		}
 		
 	}
