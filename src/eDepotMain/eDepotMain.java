@@ -30,10 +30,6 @@ public class eDepotMain {
 			System.out.println("|     eDepot Main Menu     |");
 			System.out.println("|--------------------------|");
 			System.out.println("|1 - Login                 |");
-			System.out.println("|2 - [S]et up Work Schedule|");
-			System.out.println("|3 - [A]dd Vehicle         |");
-			System.out.println("|4 - [R]e-Assign Vehicle   |");
-			System.out.println("|4 - [G]et Vehicle Details |");
 			System.out.println("|Q - Quit                  |");
 			System.out.println(" --------------------------");
 			System.out.print("\nPick: ");
@@ -53,16 +49,53 @@ public class eDepotMain {
 					depotObject.logOn(userName, passWord);
 					int index = 0;
 					
-					if(depotObject.checkUserJobType(index)){
-						
+					if(depotObject.checkUserJobType(index).toString()=="true"){
+						Menu("manager");
 					}else{
-						
+						Menu("driver");
 					}
 					
 					break;
 					
 				}
+
+			}
+			
+		} while(!choice.equalsIgnoreCase("Q"));
+		
+		System.out.print("Application Closed.");
+		depotObject.saveAllChanges();
+		S.close();
+	}
+	
+	public static void Menu(String userType){
+		String choice="";
+		if (userType=="manager"){
+		do {
+			System.out.println("\n __________________________");
+			System.out.println("|     eDepot manager Menu  |");
+			System.out.println("|--------------------------|");
+			System.out.println("|1 - [V]iew work schedule  |");
+			System.out.println("|2 - [S]et up Work Schedule|");
+			System.out.println("|3 - [A]dd Vehicle         |");
+			System.out.println("|4 - [R]e-Assign Vehicle   |");
+			System.out.println("|5 - [G]et Vehicle Details |");
+			System.out.println("|6 - [N]ew Driver          |");
+			System.out.println("|Q - Quit                  |");
+			System.out.println(" --------------------------");
+			System.out.print("\nPick: ");
+			
+			choice = S.next().toUpperCase();
+			
+			switch(choice) {
+			
+			case "1":
+			case "V":{
 				
+				break;
+				
+			}
+									
 				case "2":
 				case "S":{
 					
@@ -105,6 +138,11 @@ public class eDepotMain {
 					System.out.println("Please enter the vehicle's registration number: ");
 					depotObject.getVehicle(S.next().toUpperCase());
 				}
+				
+				case "6":
+				case "N":{
+                //Add New Driver
+				}
 			}
 			
 		} while(!choice.equalsIgnoreCase("Q"));
@@ -112,6 +150,42 @@ public class eDepotMain {
 		System.out.print("Application Closed.");
 		depotObject.saveAllChanges();
 		S.close();
+	}else{
+		do {
+			System.out.println("\n __________________________");
+			System.out.println("|     eDepot driver  Menu  |");
+			System.out.println("|--------------------------|");
+			System.out.println("|1 - [V]iew work schedule  |");
+			System.out.println("|2 - [G]et Vehicle Details |");
+			System.out.println("|Q - Quit                  |");
+			System.out.println(" --------------------------");
+			System.out.print("\nPick: ");
+			
+			choice = S.next().toUpperCase();
+			
+			switch(choice) {
+			
+			case "1":
+			case "V":{
+				
+				break;
+				
+			}
+								
+				case "2":
+				case "G":{
+					System.out.println("Please enter the vehicle's registration number: ");
+					depotObject.getVehicle(S.next().toUpperCase());
+				}
+			}
+			
+		} while(!choice.equalsIgnoreCase("Q"));
+		
+		System.out.print("Application Closed.");
+		depotObject.saveAllChanges();
+		S.close();
+		
+	}
 	}
 	
 
