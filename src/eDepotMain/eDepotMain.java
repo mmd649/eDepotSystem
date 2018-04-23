@@ -113,7 +113,7 @@ public class eDepotMain {
 				System.out.println("|3 - [A]dd Vehicle         |");
 				System.out.println("|4 - [R]e-Assign Vehicle   |");
 				System.out.println("|5 - [G]et Vehicle Details |");
-				System.out.println("|6 - [N]ew Driver          |");
+				System.out.println("|6 - [E]dit Drivers        |");
 				System.out.println("|L - Logout                |");
 				System.out.println(" --------------------------");
 				System.out.print("\nPick: ");
@@ -173,8 +173,8 @@ public class eDepotMain {
 				}
 
 				case "6":
-				case "N":{
-					//Add New Driver
+				case "E":{
+					editDriver();
 				}
 				}
 
@@ -318,6 +318,106 @@ public class eDepotMain {
 
 	}
 
+	public static void editDriver(){
+		do {
+			System.out.println("\n __________________________");
+			System.out.println("|     eDepot driver  Menu  |");
+			System.out.println("|--------------------------|");
+			System.out.println("|1 - [A]dd new driver      |");
+			System.out.println("|2 - [D]elete driver       |");
+			System.out.println("|3 - [R]eturn to main menu |");
+			System.out.println("|L - Logout                |");
+			System.out.println(" --------------------------");
+			System.out.print("\nPick: ");
+
+			choice = S.next().toUpperCase();
+
+			switch(choice) {
+
+			case "1":
+			case "A":{
+				addNewDriver();
+				break;
+			}
+
+
+			case "2":
+			case "D":{
+				break;
+			}
+			
+			case "3":
+			case "R":{
+				break;
+			}
+			}
+
+		} while(!choice.equalsIgnoreCase("L"));
+	}
+	public static void addNewDriver() {	
+		String userName, password, type,depotAssigned;
+		//Checks if driver exists in the system; drivers cannot have the same user name
+		boolean valid=false;
+	
+		do{
+			System.out.println("\nPlease enter the user name: ");
+			userName = S.next();			
+			int found=0;
+			File file = new File("src/txt/Users.txt");
+			try {
+				Scanner scanner = new Scanner(file);
+				int lineNo = 0;
+				while (scanner.hasNextLine()) {
+					String line = scanner.nextLine();
+					lineNo++;
+					if(line.contains(userName)) { 			        	
+						valid=false; //driver does exist in the system
+						found=3;
+					}
+				}
+				if (found==3){
+					valid=false;
+					System.err.println("Driver username already exists please enter another username");
+				}else{
+					valid=true;
+				}
+			} catch(FileNotFoundException e) { 
+			}
+		}while(!valid);
+		
+		System.out.print("\nPlease enter a password for account: ");
+		password = S.next();
+		
+		valid=false;
+		do{
+			System.out.print("\nPlease specify account type [m]anager or [d]river:  ");
+			type = S.next();
+			if (type.equals("m")){
+				type="manager";
+				valid=true;
+			}
+			if (type.equals("d")){
+				type="driver";
+				valid=true;
+			}
+		}while(!valid);
+
+		System.out.print("\nPlease specify driver depot is assigned to: ");
+		depotAssigned = S.next();
+		
+		try(FileWriter fw = new FileWriter("src/txt/users.txt", true);
+				    BufferedWriter bw = new BufferedWriter(fw);
+							    PrintWriter out = new PrintWriter(bw))
+							{
+							    out.println("n "+ userName+" "+password+" "+type+" "+depotAssigned);
+							    System.out.println("----New user added-----");
+							} catch (IOException e) {
+						    System.err.println("unable to add new user");
+							}
+
+		
+	}
+	
 	//	 Basic add work schedule 
 
 	public static WorkSchedule newSchedule() {		
