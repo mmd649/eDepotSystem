@@ -39,6 +39,7 @@ public class Depot {
 	private ArrayList<String> clientName = new ArrayList<>();
 	private ArrayList<Date> startDate = new ArrayList<>();
 	private ArrayList<Date> endDate = new ArrayList<>();
+	private ArrayList<Boolean> isArchived = new ArrayList<>();
 	
 
 	public Depot() {
@@ -188,6 +189,16 @@ public class Depot {
 				startDate.add(new SimpleDateFormat("dd/MM/yyyy").parse(line[3]));
 				endDate.add(new SimpleDateFormat("dd/MM/yyyy").parse(line[4]));
 				
+				if(new SimpleDateFormat("dd/MM/yyyy").parse(line[4]).after(new Date())) {
+					
+					isArchived.add(true);
+					
+				} else {
+					
+					isArchived.add(false);
+					
+				}
+				
 			}
 			S.close();
 		} catch (Exception e) {
@@ -335,9 +346,57 @@ public class Depot {
 		
 	}
 	
-	public void transferVehicle(String vehicleType, String vehicleRegNo,  String newDepot) {
+	public boolean searchDrivers(String driverUsername) {
 		
-		if(vehicleType.equalsIgnoreCase("Truck")) {
+		boolean driverExist = false;
+		
+		if(userName.contains(driverUsername)) {
+			driverExist = true;
+		}
+		
+		return driverExist;
+	}
+	
+	public boolean searchTruck(String regNo) {
+		
+		boolean truckExist = false;
+
+			if(truckRegNo.contains(regNo)) {
+				truckExist = true;
+			}
+			
+		return truckExist;
+		
+	}
+	
+	public boolean searchTanker(String regNo) {
+		
+		boolean tankerExist = false;
+		
+		if(tankerRegNo.contains(regNo)) {
+			tankerExist = true;
+		}
+		
+		return tankerExist;
+		
+	}
+	
+	public boolean searchVehicle(String regNo) {
+		
+		boolean vehicleExist = false;
+		
+		if(searchTruck(regNo) || searchTanker(regNo)) {
+			
+			vehicleExist = true;
+			
+		}
+		
+		return vehicleExist;
+	}
+	
+	public void transferVehicle(String vehicleRegNo,  String newDepot) {
+		
+		if(searchTruck(vehicleRegNo)) {
 			
 			try {
 				
@@ -350,7 +409,7 @@ public class Depot {
 				System.err.println("No vehicle found with that registration number.");
 			}
 			
-		} else if(vehicleType.equalsIgnoreCase("Tanker")) {
+		} else if(searchTanker(vehicleRegNo)) {
 			
 			try {
 				
@@ -437,8 +496,9 @@ public class Depot {
 				String c = clientName.get(x);
 				String d = df.format(startDate.get(x));
 				String e = df.format(endDate.get(x));
+				String f = Boolean.toString(isArchived.get(x));
 				
-				pw.println(a + " " + b + " " + c + " " + d + " " + e);
+				pw.println(a + " " + b + " " + c + " " + d + " " + e + " " + f);
 				
 			}
 			

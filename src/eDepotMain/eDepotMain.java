@@ -100,7 +100,7 @@ public class eDepotMain {
 	public static void Menu(String userType){
 
 				
-		String choice="";
+		String choice = "";
 
 		if (userType.equalsIgnoreCase("Manager")){
 
@@ -122,65 +122,91 @@ public class eDepotMain {
 
 				switch(choice) {
 
-				case "1":
-				case "V":{
-					depotObject.viewWorkschdule(userName);
-					break;
-
-				}
-
-				case "2":
-				case "S":{
-
-					depotObject.addSchedule(newSchedule());
-
-					break;
-
-				}
-
-				case "3":
-				case "A":{
-
-					System.out.println("What type of vehicle do you want to add?: [Truck|Tanker] ");
-					String vehicleType = S.next();
-
-					if(vehicleType.equalsIgnoreCase("Truck")) {
-
-						depotObject.addTruck(newTruck());
-
-					} else if(vehicleType.equalsIgnoreCase("Tanker")) {
-
-						depotObject.addTanker(newTanker());
-
-					} else {
-						System.out.println("Invalid vehicle type");
+					case "1":
+					case "V":{
+						depotObject.viewWorkschdule(userName);
+						break;
+	
 					}
-
-					break;
-
-				}
-
-				case "4":
-				case "R":{
-
-					break;
-				}
-
-				case "5":
-				case "G":{
-					System.out.println("Please enter the vehicle's registration number: ");
-					depotObject.getVehicle(S.next().toUpperCase());
-				}
-
-				case "6":
-				case "E":{
-					editDriver();
-				}
+	
+					case "2":
+					case "S":{
+	
+						depotObject.addSchedule(newSchedule());
+	
+						break;
+	
+					}
+	
+					case "3":
+					case "A":{
+	
+						System.out.println("What type of vehicle do you want to add?: [Truck|Tanker] ");
+						String vehicleType = S.next();
+	
+						if(vehicleType.equalsIgnoreCase("Truck")) {
+	
+							depotObject.addTruck(newTruck());
+	
+						} else if(vehicleType.equalsIgnoreCase("Tanker")) {
+	
+							depotObject.addTanker(newTanker());
+	
+						} else {
+							System.out.println("Invalid vehicle type");
+						}
+	
+						break;
+	
+					}
+	
+					case "4":
+					case "R":{
+						
+						String vehicleRegNo = "", newDepot= "";
+						boolean validReg = false;
+						
+						do {
+						
+							System.out.println("Please enter the vehicle's registration number: ");
+							String tempRegNo = S.next();
+							
+							if(depotObject.searchVehicle(tempRegNo)) {
+								
+								tempRegNo = vehicleRegNo;
+								validReg = true;
+								
+							}
+							
+						} while(!validReg);
+						
+						System.out.println("Please enter the depot you want this vehicle to be transffered to: ");
+						newDepot = S.next();
+						
+						depotObject.transferVehicle(vehicleRegNo, newDepot);
+						
+						break;
+					}
+	
+					case "5":
+					case "G":{
+						
+						System.out.println("Please enter the vehicle's registration number: ");
+						depotObject.getVehicle(S.next().toUpperCase());
+						break;
+					}
+	
+					case "6":
+					case "E":{
+						editDriver();
+						break;
+					}
 				}
 
 			} while(!choice.equalsIgnoreCase("L"));
 
 		}else if (userType.equalsIgnoreCase("Driver")){
+			
 			do {
 				System.out.println("\n __________________________");
 				System.out.println("|     eDepot driver  Menu  |");
@@ -296,9 +322,12 @@ public class eDepotMain {
 		do {				
 			System.out.print("\nPlease enter the end date of the schedule(dd/mm/yyyy): ");
 			regNo = S.next();			
-			Boolean validReg = regNo.matches(regRegex);		
+			Boolean validReg = regNo.matches(regRegex);	
+			
 			if(validReg) {
+				
 				inputValid=false;
+				
 			} else {
 
 				System.err.print("\nInvalid vehicle registration number- please make sure reg number is upper case");		
@@ -319,6 +348,7 @@ public class eDepotMain {
 	}
 
 	public static void editDriver(){
+		
 		do {
 			System.out.println("\n __________________________");
 			System.out.println("|     eDepot driver  Menu  |");
@@ -326,7 +356,7 @@ public class eDepotMain {
 			System.out.println("|1 - [A]dd new driver      |");
 			System.out.println("|2 - [D]elete driver       |");
 			System.out.println("|3 - [R]eturn to main menu |");
-			System.out.println("|L - Logout                |");
+			System.out.println("|B - Back                |");
 			System.out.println(" --------------------------");
 			System.out.print("\nPick: ");
 
@@ -352,7 +382,7 @@ public class eDepotMain {
 			}
 			}
 
-		} while(!choice.equalsIgnoreCase("L"));
+		} while(!choice.equalsIgnoreCase("B"));
 	}
 	public static void addNewDriver() {	
 		String userName, password, type,depotAssigned;
@@ -360,60 +390,90 @@ public class eDepotMain {
 		boolean valid=false;
 	
 		do{
+			
 			System.out.println("\nPlease enter the user name: ");
 			userName = S.next();			
 			int found=0;
+			
 			File file = new File("src/txt/Users.txt");
+			
 			try {
+				
 				Scanner scanner = new Scanner(file);
 				int lineNo = 0;
+				
 				while (scanner.hasNextLine()) {
+					
 					String line = scanner.nextLine();
 					lineNo++;
-					if(line.contains(userName)) { 			        	
+					
+					if(line.contains(userName)) { 	
+						
 						valid=false; //driver does exist in the system
 						found=3;
+						
 					}
 				}
+				
 				if (found==3){
-					valid=false;
+					
+					valid = false;
+					
 					System.err.println("Driver username already exists please enter another username");
 				}else{
+					
 					valid=true;
+					
 				}
+				
+				scanner.close();
+				
 			} catch(FileNotFoundException e) { 
+				
 			}
 		}while(!valid);
 		
 		System.out.print("\nPlease enter a password for account: ");
 		password = S.next();
 		
-		valid=false;
+		valid = false;
+		
 		do{
-			System.out.print("\nPlease specify account type [m]anager or [d]river:  ");
+			
+			System.out.print("\nPlease specify account type [M]anager or [D]river:  ");
 			type = S.next();
-			if (type.equals("m")){
+			
+			if (type.equalsIgnoreCase("M")){
+				
 				type="manager";
 				valid=true;
+				
 			}
-			if (type.equals("d")){
+			
+			if (type.equalsIgnoreCase("D")){
+				
 				type="driver";
 				valid=true;
+				
 			}
+			
 		}while(!valid);
 
 		System.out.print("\nPlease specify driver depot is assigned to: ");
 		depotAssigned = S.next();
 		
 		try(FileWriter fw = new FileWriter("src/txt/users.txt", true);
-				    BufferedWriter bw = new BufferedWriter(fw);
-							    PrintWriter out = new PrintWriter(bw))
-							{
-							    out.println("n "+ userName+" "+password+" "+type+" "+depotAssigned);
-							    System.out.println("----New user added-----");
-							} catch (IOException e) {
-						    System.err.println("unable to add new user");
-							}
+				
+			BufferedWriter bw = new BufferedWriter(fw);			
+			PrintWriter out = new PrintWriter(bw)) {		
+			out.println("n "+ userName+" "+password+" "+type+" "+depotAssigned);
+			System.out.println("\n----New user added-----");
+			
+		} catch (IOException e) {
+			
+			System.err.println("unable to add new user");
+			
+		}
 
 		
 	}
@@ -429,20 +489,33 @@ public class eDepotMain {
 		boolean valid=false;
 
 		do{
+			
 			System.out.print("\nPlease enter the vehicle registration number: ");
 			vehicleRegNo = S.next();			
 			File file = new File("src/txt/Trucks.txt");
+			
 			try {
+				
 				Scanner scanner = new Scanner(file);
 				int lineNo = 0;
+				
 				while (scanner.hasNextLine()) {
+					
 					String line = scanner.nextLine();
 					lineNo++;
-					if(line.contains(vehicleRegNo)) { 			        	
+					
+					if(line.contains(vehicleRegNo)) { 	
+						
 						valid=true; //Vehicle does exist in the system
+						
 					}
+					
 				}
+				
+				scanner.close();
+				
 			} catch(FileNotFoundException e) { 
+				
 			}
 		}while(!valid);
 
@@ -471,7 +544,10 @@ public class eDepotMain {
 				try {
 
 					startDate = sourceFormat.parse(temp);
-					inputValid = true;
+					
+					if(startDate.after(new Date())) {
+						inputValid = true;
+					}
 
 				} catch (Exception e) {
 
@@ -501,9 +577,13 @@ public class eDepotMain {
 				try {
 
 					endDate = sourceFormat.parse(temp);
+					
 					if (endDate.before(startDate)){
+						
 						System.err.println("End date can't be before start date");
+						
 					}else{
+						
 						inputValid = false;					
 					}
 				} catch (Exception e) {
