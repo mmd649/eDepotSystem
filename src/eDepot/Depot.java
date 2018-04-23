@@ -200,8 +200,6 @@ public class Depot {
 		
 		try {//Find vehicle information based on registration number
 			
-			Thread.sleep(500);
-			
 			if(truckRegNo.contains(regNo)) {
 				
 				int index = truckRegNo.indexOf(regNo);
@@ -229,6 +227,8 @@ public class Depot {
 				System.out.println("Liquid Type: " + tankerLiquidType.get(index) + "       |");
 				System.out.println("Liquid Capacity: " + tankerLiquidCapacity.get(index) + "       |");
 				
+				Thread.sleep(500);
+				
 			} else {
 				
 				System.out.println("Sorry, no vehicle found with that registration number");
@@ -236,6 +236,7 @@ public class Depot {
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.print(e);
 		}
 		
@@ -251,7 +252,6 @@ public class Depot {
 		try { //Tries to load the work schedule based on the current username
 			// NOTE: the variable names get printed
 			
-			Thread.sleep(500);
 			
 			int index = driverUsername.indexOf(driver);
 			System.out.println("Displaying schedule for user: " + driver);
@@ -261,9 +261,10 @@ public class Depot {
 			System.out.println("Start Date - " + startDate.get(index));
 			System.out.println("End Date - " + endDate.get(index));
 			
+			Thread.sleep(500);
 			
 		} catch(Exception e) {
-			
+			e.printStackTrace();
 			System.err.println("No driver found with that username");
 			
 		}
