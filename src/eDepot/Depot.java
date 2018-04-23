@@ -196,9 +196,11 @@ public class Depot {
 		
 	}
 
-	public Vehicle getVehicle(String regNo) {
+	public synchronized Vehicle getVehicle(String regNo) {
 		
-		try {
+		try {//Find vehicle information based on registration number
+			
+			Thread.sleep(500);
 			
 			if(truckRegNo.contains(regNo)) {
 				
@@ -244,9 +246,12 @@ public class Depot {
 		return null;
 	}
 	
-	public void viewWorkschdule(String driver){
+	public synchronized void viewWorkschdule(String driver){
 		
-		try {
+		try { //Tries to load the work schedule based on the current username
+			// NOTE: the variable names get printed
+			
+			Thread.sleep(500);
 			
 			int index = driverUsername.indexOf(driver);
 			System.out.println("Displaying schedule for user: " + driver);

@@ -9,7 +9,7 @@ package eDepot;
  * make
  * model
  * weight
- * regNo
+ * regNo {FORMAT: AA00AAA}
  * cargoCapacity
  * 
  */
