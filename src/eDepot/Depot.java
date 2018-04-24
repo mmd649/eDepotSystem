@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Depot {
+	
+	private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+    private static final DateTimeFormatter dateFormat8 = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
 	//An arraylist for each attributes which makes up a user.
 	private ArrayList<String> userDepot = new ArrayList<>();
@@ -179,6 +184,8 @@ public class Depot {
 			
 			Scanner S = new Scanner(Depot.class.getResourceAsStream("/txt/workSchedule.txt"));
 			
+			int x = 0;
+			
 			while(S.hasNext()) {
 				
 				String[] line = S.nextLine().split(" ");
@@ -186,19 +193,23 @@ public class Depot {
 				vehicleName.add(line[0]);
 				driverUsername.add(line[1]);
 				clientName.add(line[2]);
-				startDate.add(new SimpleDateFormat("dd/MM/yyyy").parse(line[3]));
-				endDate.add(new SimpleDateFormat("dd/MM/yyyy").parse(line[4]));
 				
-				if(new SimpleDateFormat("dd/MM/yyyy").parse(line[4]).after(new Date())) {
+				SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy"); 
+				Date tempStartDate = formatter1.parse(line[3]);
+				Date tempEndDate = formatter1.parse(line[4]);
+				
+				startDate.add(tempStartDate);
+				endDate.add(tempEndDate);
+
+				if(endDate.get(x).after(new Date())) {
 					
-					isArchived.add(true);
+					isArchived.add(x, true);
 					
 				} else {
 					
-					isArchived.add(false);
-					
+					isArchived.add(x, false);
 				}
-				
+				x++;
 			}
 			S.close();
 		} catch (Exception e) {
@@ -216,27 +227,27 @@ public class Depot {
 				int index = truckRegNo.indexOf(regNo);
 				
 				System.out.println("\n-----------------------");
-				System.out.println("Truck Details");
+				System.out.println("Truck Details           |");
 				System.out.println("-----------------------");
-				System.out.println("Make: " + truckMake.get(index) + "|");
-				System.out.println("Model: " + truckModel.get(index) + "|");
-				System.out.println("Weight: " + truckWeight.get(index) + "|");
-				System.out.println("Registration Number: " + truckRegNo.get(index) + "|");
-				System.out.println("Cargo Capacity: " + truckCargoCapacity.get(index) + "|");
+				System.out.println("Make: " + truckMake.get(index));
+				System.out.println("Model: " + truckModel.get(index));
+				System.out.println("Weight: " + truckWeight.get(index));
+				System.out.println("Registration Number: " + truckRegNo.get(index));
+				System.out.println("Cargo Capacity: " + truckCargoCapacity.get(index));
 				
 			} else if (tankerRegNo.contains(regNo)) {
 				
 				int index = tankerRegNo.indexOf(regNo);
 				
 				System.out.println("\n----------------------------");
-				System.out.println("     Tanker Details     |");
+				System.out.println("     Tanker Details         |");
 				System.out.println("----------------------------");
-				System.out.println("Make: " + tankerMake.get(index) + "       |");
-				System.out.println("Model: " + tankerModel.get(index) + "       |");
-				System.out.println("Weight: " + tankerWeight.get(index) + "       |");
-				System.out.println("Registration Number: " + tankerRegNo.get(index) + "       |");
-				System.out.println("Liquid Type: " + tankerLiquidType.get(index) + "       |");
-				System.out.println("Liquid Capacity: " + tankerLiquidCapacity.get(index) + "       |");
+				System.out.println("Make: " + tankerMake.get(index));
+				System.out.println("Model: " + tankerModel.get(index));
+				System.out.println("Weight: " + tankerWeight.get(index));
+				System.out.println("Registration Number: " + tankerRegNo.get(index));
+				System.out.println("Liquid Type: " + tankerLiquidType.get(index));
+				System.out.println("Liquid Capacity: " + tankerLiquidCapacity.get(index));
 				
 				Thread.sleep(500);
 				
@@ -434,13 +445,14 @@ public class Depot {
 			
 			for(int x = 0; x < truckMake.size(); x++) {
 				
-				String a = truckMake.get(x);
-				String b = truckModel.get(x);
-				String c = Integer.toString(truckWeight.get(x));
-				String d = truckRegNo.get(x);
-				String e = Integer.toString(truckCargoCapacity.get(x));
+				String a = truckDepot.get(x);
+				String b = truckMake.get(x);
+				String c = truckModel.get(x);
+				String d = Integer.toString(truckWeight.get(x));
+				String e = truckRegNo.get(x);
+				String f = Integer.toString(truckCargoCapacity.get(x));
 				
-				pw.println(a + " " + b + " " + c + " " + d + " " + e);
+				pw.println(a + " " + b + " " + c + " " + d + " " + e + " " + f);
 				
 			}
 			
@@ -460,14 +472,15 @@ public class Depot {
 			
 			for(int x = 0; x < tankerMake.size(); x++) {
 				
-				String a = tankerMake.get(x);
-				String b = tankerModel.get(x);
-				String c = Integer.toString(tankerWeight.get(x));
-				String d = tankerRegNo.get(x);
-				String e = tankerLiquidType.get(x);
-				String f = Integer.toString(tankerLiquidCapacity.get(x));
+				String a = tankerDepot.get(x);
+				String b = tankerMake.get(x);
+				String c = tankerModel.get(x);
+				String d = Integer.toString(tankerWeight.get(x));
+				String e = tankerRegNo.get(x);
+				String f = tankerLiquidType.get(x);
+				String g = Integer.toString(tankerLiquidCapacity.get(x));
 				
-				pw.println(a + " " + b + " " + c + " " + d + " " + e + " " + f);
+				pw.println(a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g);
 				
 			}
 			
@@ -487,7 +500,7 @@ public class Depot {
 			
 			PrintWriter pw = new PrintWriter(new File("src/txt/workSchedule.txt"));
 			
-			DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			
 			for (int x = 0; x < vehicleName.size(); x++) {
 				
