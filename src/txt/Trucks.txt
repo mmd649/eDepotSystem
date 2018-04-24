@@ -1,2 +1,6 @@
-Depot-Z Scania P-Series 14000 KX82HTH 20000
-Depot-Z Scania P-series 10000 QS87JUG 15000
+Depot-Z Mercedes P-Series 14000 KA42HGH 20000
+Depot-Z Scania P-series 14000 QS78JLG 15000
+Depot-S Honda P-Series 18000 GX12HJH 20000
+Depot-X Scania S-series 11000 KS87JIG 11000
+Depot-Y Mercedes X-Series 16000 KM28HMH 25000
+Depot-S Mercedes T-series 12000 FS56JAG 18000
