@@ -485,8 +485,6 @@ public class eDepotMain {
 
 		//Checks if registration number exists in the system
 		boolean valid = false;
-		
-		depotObject.searchFreeVehicles();
 
 		do{
 			
@@ -500,9 +498,7 @@ public class eDepotMain {
 			}
 			
 		}while(!valid);
-		
-		
-		depotObject.searchFreeDrivers();
+
 
 		System.out.print("\nPlease enter the driver's username: ");
 		driverUsername = S.next();
@@ -528,12 +524,13 @@ public class eDepotMain {
 				try {
 
 					startDate = sourceFormat.parse(temp);
-					LocalDateTime localDateTime = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			        localDateTime = localDateTime.plusHours(48);
+				LocalDateTime localDateTime = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		        localDateTime = localDateTime.plusHours(48);
 			        Date twoDaysAfter = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 					
 			        //checks if the start date is 48hours in advanced.
 					if(startDate.after(twoDaysAfter)) {
+						
 						validStart = true;
 					}
 
@@ -549,7 +546,7 @@ public class eDepotMain {
 
 			}
 
-		} while(validStart);
+		} while(!validStart);
 
 		do {
 
@@ -572,6 +569,8 @@ public class eDepotMain {
 			        
 			        //End date should be within 3 days of start date.
 					if(endDate.after(new Date()) && endDate.before(threeDaysAfterStart)) {
+						
+						validEnd = true;
 						
 					} else if (endDate.before(startDate)){
 						
