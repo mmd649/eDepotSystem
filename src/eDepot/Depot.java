@@ -4,16 +4,11 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Depot {
-	
-	private static final String DATE_FORMAT = "dd/MM/yyyy";
-    private static final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-    private static final DateTimeFormatter dateFormat8 = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
 	//An arraylist for each attributes which makes up a user.
 	private ArrayList<String> userDepot = new ArrayList<>();
@@ -39,7 +34,7 @@ public class Depot {
 	private ArrayList<Integer> tankerLiquidCapacity = new ArrayList<>();
 	
 	//An arraylist for each attributes which makes up a schedule.
-	private ArrayList<String> vehicleName = new ArrayList<>(); 
+	private ArrayList<String> vehicleRegNo = new ArrayList<>(); 
 	private ArrayList<String> driverUsername = new ArrayList<>();
 	private ArrayList<String> clientName = new ArrayList<>();
 	private ArrayList<Date> startDate = new ArrayList<>();
@@ -67,7 +62,7 @@ public class Depot {
 			
 			if(passWord.get(index).equals(pass)){
 				
-				System.out.print("\nWelcome " + user);
+				System.out.print("\nWelcome " + user + "!");
 				authenticate = true;
 				
 			}else {
@@ -190,7 +185,7 @@ public class Depot {
 				
 				String[] line = S.nextLine().split(" ");
 				
-				vehicleName.add(line[0]);
+				vehicleRegNo.add(line[0]);
 				driverUsername.add(line[1]);
 				clientName.add(line[2]);
 				
@@ -239,9 +234,9 @@ public class Depot {
 				
 				int index = tankerRegNo.indexOf(regNo);
 				
-				System.out.println("\n----------------------------");
-				System.out.println("     Tanker Details         |");
-				System.out.println("----------------------------");
+				System.out.println("\n---------------------------------");
+				System.out.println("     Tanker Details         ");
+				System.out.println("---------------------------------");
 				System.out.println("Make: " + tankerMake.get(index));
 				System.out.println("Model: " + tankerModel.get(index));
 				System.out.println("Weight: " + tankerWeight.get(index));
@@ -269,26 +264,24 @@ public class Depot {
 		return null;
 	}
 	
-	public synchronized void viewWorkschdule(String driver){
+	public void viewWorkschdule(String driver){
 		
 		try { //Tries to load the work schedule based on the current username
 			// NOTE: the variable names get printed
 			
 			
 			int index = driverUsername.indexOf(driver);
+			
 			System.out.println("Displaying schedule for user: " + driver);
 			System.out.println("---------------------------------------");
-			System.out.println("Vehicle - " + vehicleName.get(index));
+			System.out.println("Vehicle - " + vehicleRegNo.get(index));
 			System.out.println("clientName - " + clientName.get(index));
 			System.out.println("Start Date - " + startDate.get(index));
 			System.out.println("End Date - " + endDate.get(index));
 			
-			Thread.sleep(500);
-			
 		} catch(Exception e) {
-			e.printStackTrace();
-			System.err.println("No driver found with that username");
-			
+			System.err.println("No schedule found for this user!");
+	
 		}
 	}
 	
@@ -344,7 +337,7 @@ public class Depot {
 		
 		try {
 			
-			vehicleName.add(Schedule.getVehicleName());
+			vehicleRegNo.add(Schedule.getVehicleName());
 			driverUsername.add(Schedule.getDriverUsername());
 			clientName.add(Schedule.getClientName());
 			startDate.add(Schedule.getStartDate());
@@ -502,9 +495,9 @@ public class Depot {
 			
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			
-			for (int x = 0; x < vehicleName.size(); x++) {
+			for (int x = 0; x < vehicleRegNo.size(); x++) {
 				
-				String a = vehicleName.get(x);
+				String a = vehicleRegNo.get(x);
 				String b = driverUsername.get(x);
 				String c = clientName.get(x);
 				String d = df.format(startDate.get(x));

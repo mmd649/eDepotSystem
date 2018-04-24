@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
@@ -77,7 +79,6 @@ public class eDepotMain {
 
 					}
 
-					//if false, display driver menu	
 				} else {
 
 					System.out.println("Login failed. Username entered was not found.");
@@ -223,37 +224,40 @@ public class eDepotMain {
 
 				case "1":
 				case "V":{
-					Runnable r1 = new Runnable(){
+					
+					depotObject.viewWorkschdule(userName);
+					
+/*					Runnable r1 = new Runnable(){
 						public void run() {
-							depotObject.viewWorkschdule(userName);	
+	
 						}
 					};
-					es.submit(r1);
+					es.submit(r1);*/
 					break;
-				}
+					}
 
 
 				case "2":
 				case "G":{
-					Runnable r2 = new Runnable(){
-						public void run() {
+					
 					System.out.println("Please enter the vehicle's registration number: ");
 					depotObject.getVehicle(S.next().toUpperCase());
 					
+/*					Runnable r2 = new Runnable(){
+						public void run() {
+					
+					
 						}
 					};
-					es.submit(r2);
-				}
+					es.submit(r2);*/
+					}
 				}
 
 			} while(!choice.equalsIgnoreCase("L"));
 
 		}
 		
-		
-		
-
-		es.shutdown(); // method shutDown will thusly gracefully wait
+//		es.shutdown(); // method shutDown will thusly gracefully wait
 	}
 
 
@@ -355,8 +359,7 @@ public class eDepotMain {
 			System.out.println("|--------------------------|");
 			System.out.println("|1 - [A]dd new driver      |");
 			System.out.println("|2 - [D]elete driver       |");
-			System.out.println("|3 - [R]eturn to main menu |");
-			System.out.println("|B - Back                |");
+			System.out.println("|B - Back                  |");
 			System.out.println(" --------------------------");
 			System.out.print("\nPick: ");
 
@@ -364,22 +367,17 @@ public class eDepotMain {
 
 			switch(choice) {
 
-			case "1":
-			case "A":{
-				addNewDriver();
-				break;
-			}
-
-
-			case "2":
-			case "D":{
-				break;
-			}
-			
-			case "3":
-			case "R":{
-				break;
-			}
+				case "1":
+				case "A":{
+					addNewDriver();
+					break;
+				}
+	
+	
+				case "2":
+				case "D":{
+					break;
+				}
 			}
 
 		} while(!choice.equalsIgnoreCase("B"));
@@ -486,37 +484,19 @@ public class eDepotMain {
 		Date startDate = null, endDate = null;
 
 		//Checks if registration number exists in the system
-		boolean valid=false;
+		boolean valid = false;
 
 		do{
 			
 			System.out.print("\nPlease enter the vehicle registration number: ");
 			vehicleRegNo = S.next();			
-			File file = new File("src/txt/Trucks.txt");
 			
-			try {
+			if(depotObject.searchVehicle(vehicleRegNo)) {
 				
-				Scanner scanner = new Scanner(file);
-				int lineNo = 0;
-				
-				while (scanner.hasNextLine()) {
-					
-					String line = scanner.nextLine();
-					lineNo++;
-					
-					if(line.contains(vehicleRegNo)) { 	
-						
-						valid=true; //Vehicle does exist in the system
-						
-					}
-					
-				}
-				
-				scanner.close();
-				
-			} catch(FileNotFoundException e) { 
+				valid = true;
 				
 			}
+			
 		}while(!valid);
 
 
@@ -527,7 +507,7 @@ public class eDepotMain {
 		System.out.print("\nPlease enter Client name: ");
 		clientName = S.next();
 
-		boolean inputValid = false;
+		boolean validStart = false, validEnd = false;
 		String dateRegex = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$"; 
 
 		do {
@@ -544,9 +524,13 @@ public class eDepotMain {
 				try {
 
 					startDate = sourceFormat.parse(temp);
+					LocalDateTime localDateTime = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			        localDateTime = localDateTime.plusHours(48);
+			        Date twoDaysAfter = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 					
-					if(startDate.after(new Date())) {
-						inputValid = true;
+			        //checks if the start date is 48hours in advanced.
+					if(startDate.after(twoDaysAfter)) {
+						validStart = true;
 					}
 
 				} catch (Exception e) {
@@ -561,7 +545,7 @@ public class eDepotMain {
 
 			}
 
-		} while(!inputValid);
+		} while(validStart);
 
 		do {
 
@@ -578,13 +562,20 @@ public class eDepotMain {
 
 					endDate = sourceFormat.parse(temp);
 					
-					if (endDate.before(startDate)){
+					LocalDateTime localDateTime = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			        localDateTime = localDateTime.plusHours(72);
+			        Date threeDaysAfterStart = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+			        
+			        //End date should be within 3 days of start date.
+					if(endDate.after(new Date()) && endDate.before(threeDaysAfterStart)) {
+						
+					} else if (endDate.before(startDate)){
 						
 						System.err.println("End date can't be before start date");
 						
 					}else{
 						
-						inputValid = false;					
+						validEnd = false;					
 					}
 				} catch (Exception e) {
 
@@ -598,7 +589,7 @@ public class eDepotMain {
 
 			}
 
-		} while(inputValid);
+		} while(!validEnd);
 
 		WorkSchedule newSchedule = new WorkSchedule(vehicleRegNo, driverUsername, clientName, startDate, endDate);
 		System.out.println("New work schedule added");
