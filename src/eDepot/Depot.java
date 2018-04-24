@@ -213,7 +213,7 @@ public class Depot {
 		
 	}
 
-	public synchronized Vehicle getVehicle(String regNo) {
+	public void getVehicle(String regNo) {
 		
 		try {//Find vehicle information based on registration number
 			
@@ -222,7 +222,7 @@ public class Depot {
 				int index = truckRegNo.indexOf(regNo);
 				
 				System.out.println("\n-----------------------");
-				System.out.println("Truck Details           |");
+				System.out.println("Truck Details           ");
 				System.out.println("-----------------------");
 				System.out.println("Make: " + truckMake.get(index));
 				System.out.println("Model: " + truckModel.get(index));
@@ -256,8 +256,42 @@ public class Depot {
 			e.printStackTrace();
 			System.out.print(e);
 		}
+	}
+	
+	public void getDepotVehicles(String Depot) {
 		
-		return null;
+		try {
+			
+			System.out.print("List of Trucks");
+			
+			for(int x = 0; x < truckDepot.size(); x++) {
+				
+				System.out.println("\nMake: " + truckMake.get(x));
+				System.out.println("Model: " + truckModel.get(x));
+				System.out.println("Weight: " + truckWeight.get(x));
+				System.out.println("Registration Number: " + truckRegNo.get(x));
+				System.out.println("Cargo Capacity: " + truckCargoCapacity.get(x));
+				
+				
+			}
+			
+			System.out.println("\n\nList of Tankers");
+			
+			for(int x = 0; x < tankerDepot.size(); x++) {
+				
+				System.out.println("Make: " + tankerMake.get(x));
+				System.out.println("Model: " + tankerModel.get(x));
+				System.out.println("Weight: " + tankerWeight.get(x));
+				System.out.println("Registration Number: " + tankerRegNo.get(x));
+				System.out.println("Liquid Type: " + tankerLiquidType.get(x));
+				System.out.println("Liquid Capacity: " + tankerLiquidCapacity.get(x));
+				
+			}
+			
+		} catch(Exception e) {
+			System.err.print("No vehicles are currently registered in this depot.");
+		}
+		
 	}
 
 	public Driver getDriver() {
@@ -396,6 +430,70 @@ public class Depot {
 		}
 		
 		return vehicleExist;
+	}
+	
+	public void searchFreeDrivers() {
+		
+		System.out.println("List of drivers that has no current workschedule: ");
+		
+		for(int x = 0; x < userName.size(); x++) {
+			
+			if(driverUsername.contains(userName.get(x))) {
+				
+				int index = driverUsername.indexOf(userName.get(x));
+				
+				if(endDate.get(index).after(new Date())) {
+					
+					System.out.println(driverUsername.get(x));
+					
+				}
+				
+			}
+			
+			System.out.println(userName.get(x));
+			
+		}
+		
+		for(int x = 0; x < vehicleRegNo.size(); x++) {
+			
+			if(endDate.get(x).after(new Date())) {
+				
+			}
+			
+		}
+		
+	}
+	
+	public void searchFreeVehicles() {
+		
+		System.out.println("List of drivers that has no current workschedule: ");
+		
+		for(int x = 0; x < userName.size(); x++) {
+			
+			if(driverUsername.contains(userName.get(x))) {
+				
+				int index = driverUsername.indexOf(userName.get(x));
+				
+				if(endDate.get(index).after(new Date())) {
+					
+					System.out.println(driverUsername.get(x));
+					
+				}
+				
+			}
+			
+			System.out.println(userName.get(x));
+			
+		}
+		
+		for(int x = 0; x < vehicleRegNo.size(); x++) {
+			
+			if(endDate.get(x).after(new Date())) {
+				
+			}
+			
+		}
+		
 	}
 	
 	public void transferVehicle(String vehicleRegNo,  String newDepot) {

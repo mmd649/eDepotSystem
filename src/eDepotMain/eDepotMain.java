@@ -485,6 +485,8 @@ public class eDepotMain {
 
 		//Checks if registration number exists in the system
 		boolean valid = false;
+		
+		depotObject.searchFreeVehicles();
 
 		do{
 			
@@ -498,7 +500,9 @@ public class eDepotMain {
 			}
 			
 		}while(!valid);
-
+		
+		
+		depotObject.searchFreeDrivers();
 
 		System.out.print("\nPlease enter the driver's username: ");
 		driverUsername = S.next();
